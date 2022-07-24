@@ -1,0 +1,521 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is a sample documentation of salamatKhodro project.",
+    "version": "1.0.0",
+    "title": "SalamatKhodro",
+    "contact": {
+      "email": "Admin@SalamatKhodro.ir"
+    }
+  },
+  "tags": [
+    {
+      "name": "User",
+      "description": "Operations about Users"
+    },
+    {
+      "name": "Role",
+      "description": "Operations about Role"
+    },
+    {
+      "name": "Car",
+      "description": "Operations about Car"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Return who is login",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "password"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "vahid"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/auth/whoami": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Return who is login",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/users/getAll": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "Return all users",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pagination start from ONE; Other Fields as filter can be Optional",
+            "schema": {
+              "type": "object",
+              "required": [
+                "page",
+                "size"
+              ],
+              "properties": {
+                "page": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "size": {
+                  "type": "number",
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/users/create": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create new user",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "required": [
+                "username",
+                "password",
+                "name",
+                "email"
+              ],
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "vahid"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "وحید محمدی"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@gmail.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/users/update": {
+      "put": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create new user",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "_id is required other item is optional",
+            "schema": {
+              "type": "object",
+              "required": [
+                "_id"
+              ],
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "6245255b5470a02c7ef8a80c"
+                },
+                "username": {
+                  "type": "string",
+                  "example": "vahid"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "123456"
+                },
+                "name": {
+                  "type": "string",
+                  "example": "وحید محمدی"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "test@gmail.com"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/users/delete": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "summary": "create new user",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "insert _id of user",
+            "schema": {
+              "type": "object",
+              "required": [
+                "_id"
+              ],
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "6245255b5470a02c7ef8a80c"
+                }
+              }
+            }
+          }
+
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+
+    "/api/roles/getAll": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Return all roles",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "Pagination start from ONE; Other Fields as filter can be Optional",
+            "schema": {
+              "type": "object",
+              "required": [
+                "page",
+                "size"
+              ],
+              "properties": {
+                "page": {
+                  "type": "number",
+                  "example": "1"
+                },
+                "size": {
+                  "type": "number",
+                  "example": "1"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/roles/create": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Create new roles",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "role is required; permissions as array is Optional",
+            "schema": {
+              "type": "object",
+              "required": [
+                "role"
+              ],
+              "properties": {
+                "role": {
+                  "type": "string",
+                  "example": "test"
+                },
+                "permissions": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "attributes": "*",
+                      "action": "read:any",
+                      "resource": "User"
+
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/roles/update": {
+      "put": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Update roles",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "",
+            "schema": {
+              "type": "object",
+              "required": [
+                "_id"
+              ],
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "6245255b5470a02c7ef8a80c"
+                },
+                "permissions": {
+                  "type": "array",
+                  "example": [
+                    {
+                      "attributes": "*",
+                      "action": "read:any",
+                      "resource": "User"
+
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/roles/delete": {
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "Delete roles",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "description": "insert _id of role",
+            "schema": {
+              "type": "object",
+              "required": [
+                "_id"
+              ],
+              "properties": {
+                "_id": {
+                  "type": "string",
+                  "example": "6245255b5470a02c7ef8a80c"
+                }
+              }
+            }
+          }
+
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    },
+    "/api/roles/distinct": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "summary": "get all roles",
+        "description": "",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+        ],
+        "responses": {
+          "401": {
+            "description": "Invalid input"
+          }
+        }
+      }
+    }
+
+
+
+  },
+  "securityDefinitions": {
+    "JWT": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  },
+  "security": [ { "JWT": [] } ],
+  "definitions": {
+    "User": {
+      "type": "object",
+      "required": [
+        "eRx"
+      ],
+      "properties": {
+        "eRx": {
+          "type": "string",
+          "example": "eRx123466"
+        }
+      }
+    }
+  }
+}

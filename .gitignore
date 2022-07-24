@@ -1,0 +1,9 @@
+node_modules
+doodle.json
+pull.py
+.idea/
+temp/
+uploads/
+data.json
+*.xlsx
+new feature
