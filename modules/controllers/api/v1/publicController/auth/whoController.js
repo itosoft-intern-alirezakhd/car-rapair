@@ -1,8 +1,8 @@
-import { InitializeController } from "./initializeController"
+import  InitializeController  from "./initializeController.js"
 
 export default new(class WhoController extends InitializeController {
 
-    async whoAmI  (req, res)  {
+    async whoAmI  (req, res,next)  {
         try {
             console.log(res.locals.loggedInUser)
             const data = res.locals.loggedInUser.toObject()

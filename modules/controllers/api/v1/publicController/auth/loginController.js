@@ -1,8 +1,5 @@
-import { next } from 'cheerio/lib/api/traversing';
 import otpGenerator from 'otp-generator'
-import {
-    InitializeController
-} from './initializeController'
+import InitializeController from './initializeController.js'
 
 
 export default new(class loginController extends InitializeController {

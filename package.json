@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "start": "node --experimental-json-modules app.js",
   "name": "api",
   "version": "1.0.0",

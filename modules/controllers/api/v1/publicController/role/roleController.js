@@ -1,12 +1,12 @@
 import {
     AccessControl
 } from "accesscontrol";
-import { InitializeController } from "./initializeController";
+import { InitializeController } from "./initializeController.js";
 
 
 export default new(class RoleController extends InitializeController {
 
-    getGrants = function () {
+    getGrants = async function () {
         let grantList = [];
         const roless = await this.model.Role.find({})
         roless.forEach(role => {

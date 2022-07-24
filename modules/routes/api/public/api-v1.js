@@ -1,27 +1,23 @@
 import express from "express"
-import config from '../../../../config';
+import {config} from '../../../../config.js';
 const {public : publicController} = config.path.controllersApi.v1
 const {middleware } = config.path
 const {controller} = config.path
 
-//import Controller
-import * as roleController from `${controller}/rolesController`
-import * as userController from `${controller}/usersController`
-
 //auth 
-import  registerController from `${publicController}/auth/registerController`
-import whoController from `${publicController}/auth/whoController`
-import * as loginController from `${publicController}/auth/loginController`
+import  registerController from '../../../controllers/api/v1/publicController/auth/registerController.js'
+import whoController from '../../../controllers/api/v1/publicController/auth/whoController.js'
+import loginController from '../../../controllers/api/v1/publicController/auth/loginController.js'
 //car
-import * as carController from `${publicController}/car/carController`
+import  carController from '../../../controllers/api/v1/publicController/car/carController.js'
 //role
-import * as roleController from `${publicController}/role/roleController`
+import  roleController from '../../../controllers/api/v1/publicController/role/roleController.js'
 //user
-import * as userController from `${publicController}/user/userController`
- 
+import  userController from '../../../controllers/api/v1/publicController/user/userController.js'
+
 //import middleware
-import allowLoggedIn from `${middleware}/allow-loggedIn-middleware`
-import grantAccess from `${middleware}}/grant-access-middleware`
+import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
+import grantAccess from '../../middlewares/grant-access-middleware.js'
 
 //Router
 const router = express.Router();
@@ -38,17 +34,16 @@ router.use('/auth' , authRouter);
 
 //profile 
 const profileRouter = express.Router();
-profileRouter.get('/', allowLoggedIn, grantAccess('readAny', 'profile'), User.profile);
+profileRouter.get('/', allowLoggedIn, grantAccess('readAny', 'profile'), userController.profile.bind(userController));
 router.use('/profile' , profileRouter);
-
 
 
 //User
 const userRouter = express.Router();
 userRouter.post('/getAll', allowLoggedIn, grantAccess('readAny', 'user'), userController.getUsers.bind(userController));
-userRouter.post('/create', allowLoggedIn, grantAccess('createAny', 'user'), userController.signUp.bind(userController));
+userRouter.post('/create', allowLoggedIn, grantAccess('createAny', 'user'), registerController.signUp.bind(userController));
 userRouter.put('/update', allowLoggedIn, grantAccess('updateAny', 'user'), userController.updateUser.bind(userController));
-userRouter.delete('/delete', allowLoggedIn, grantAccess('deleteAny', 'user'), userController.dele.bind(userController));
+userRouter.delete('/delete', allowLoggedIn, grantAccess('deleteAny', 'user'), userController.deleteUser.bind(userController));
 router.use('/users' , userRouter);
 
 

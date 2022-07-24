@@ -1,5 +1,5 @@
 import emailRegex from 'email-regex'
-import {InitializeController} from './initializeController';
+import InitializeController from './initializeController.js'; 
 
 
 export default new(class RegisterController extends InitializeController {

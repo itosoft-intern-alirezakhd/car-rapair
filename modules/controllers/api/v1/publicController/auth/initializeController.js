@@ -1,17 +1,15 @@
 
-const {Controller} = require('../../../../controller')
-const axios = require('../../../../helpers/axios')
-const {hashPassword, validatePassword } = require('../../../../helpers/password')
+import {Controller} from '../../../../controller.js'
+import axios from '../../../../../helpers/axios.js'
+import {hashPassword, validatePassword } from '../../../../../helpers/password.js'
+import {configVerify , configToken} from '../../../../../helpers/const.js'
+import {response} from '../../../../../helpers/response.js'
+import Otp from '../../../../../models/otp-model.js'
+import User from '../../../../../models/user-model.js'
+import Role from '../../../../../models/role-model.js'
 
 
-import {configVerify , configToken} from '../../../../helpers/const'
-import response from '../../../../helpers/response'
-import Otp from '../models/otpModels'
-import User from '../models/userModel'
-import Role from '../models/roleModel'
-
-
-module.exports = class InitializeController extends Controller{
+export default class InitializeController extends Controller{
     constructor(){
         super();
         (this.model = {User,Otp , Role}) , 

@@ -1,6 +1,6 @@
-import { Controller } from "../../../controller";
-import Role from '../../../../models/Role'
-import response from '../../../../helpers/response'
+import { Controller } from "../../../../controller.js";
+import Role from '../../../../../models/role-model.js'
+import {response} from '../../../../../helpers/response.js'
 
 export class InitializeController extends Controller{
     constructor(){

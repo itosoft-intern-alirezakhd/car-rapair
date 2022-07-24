@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import User from './modules/models/userModel.js'
+import User from '../../models/user-model.js'
 
 
 export default async (req, res, next) => {

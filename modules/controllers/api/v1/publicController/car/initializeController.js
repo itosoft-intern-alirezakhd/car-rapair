@@ -1,7 +1,7 @@
-import { Controller } from "../../../controller";
-import Car from '../../../../models/Car'
-import Pagination from "../../../../helpers/pagination" 
-import response  from '../../../../helpers/response'
+import { Controller } from "../../../../controller.js";
+import Car from '../../../../../models/car-model.js'
+import Pagination from "../../../../../helpers/pagination.js" 
+import {response}  from '../../../../../helpers/response.js'
 
 export class InitializeController extends Controller{
     constructor(){

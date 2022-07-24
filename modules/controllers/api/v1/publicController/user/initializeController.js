@@ -1,8 +1,8 @@
-import { Controller } from "../../../controller";
-import User from '../../../../models/User'
-import {hashPassword , validatePassword} from '../../../../helpers/password'
-import Pagination from '../../../../helpers/pagination';
-import response from '../../../../helpers/response'
+import { Controller } from '../../../../controller.js'
+import User from '../../../../../models/user-model.js'
+import {hashPassword , validatePassword} from '../../../../../helpers/password.js'
+import Pagination from '../../../../../helpers/pagination.js';
+import {response} from '../../../../../helpers/response.js'
 
 export class InitializeController extends Controller{
     constructor(){

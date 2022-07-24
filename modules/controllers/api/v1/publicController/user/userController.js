@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken'
-import { InitializeController } from './initializeController';
+import { InitializeController } from './initializeController.js';
 
 
 export default new(class CarController extends InitializeController {
