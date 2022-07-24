@@ -1,7 +1,7 @@
 // const AccessControl = require("accesscontrol");
 import {AccessControl} from "accesscontrol";
 // const Role = require('../models/roleModel');
-import Role from "../models/roleModel.js";
+import Role from "../models/role-model.js";
 
 const getGrants = function () {
     let grantList = [];
