@@ -12,9 +12,14 @@ const CarSchema = new mongoose.Schema({
         faName: {type: String, required: true, trim: true},
         enName: {type: String, required: true, trim: true},
         slug: {type: String, required: true, trim: true},
-    }]
+    }],
+    userId : {
+       type: mongoose.Schema.Types.ObjectId, 
+       ref: 'user',
+       require : true
+    }
 });
 
 CarSchema.plugin(uniqueValidator);
-const Role = mongoose.model('cars', CarSchema);
-export default Role
+const Car = mongoose.model('cars', CarSchema);
+export default Car
