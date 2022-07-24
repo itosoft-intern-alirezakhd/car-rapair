@@ -13,8 +13,11 @@ const OtpSchema = new mongoose.Schema({
         require: true
     },
     // accessToken: {type: String},
-    createAt: {type: Date, default: Date.now(), index: {expire: 300}}
-
+    createAt: {type: Date, default: Date.now(), index: {expire: 300}},
+    userId : {
+        type: mongoose.Schema.Types.ObjectId,
+         ref: 'user' 
+    }
     // After 5 minutes it deleted automatically from the database
 }, { timestamps: true})
 const Otp = mongoose.model("Otp",  OtpSchema)

@@ -9,8 +9,8 @@ const RoleSchema = new mongoose.Schema({
     userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user' , require : true},
     extend: [{type: String}],
     permissions: [{
-        resource: {type: String, required: true},
-        action: {type: String, required: true},
+        resource: {type: String},
+        action: {type: String},
         attributes: {type: String, default: '*'},
     }],
 });

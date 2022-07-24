@@ -4,6 +4,7 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 const UserSchema = new mongoose.Schema({
     name: {type: String},
+    userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user', null: true},
     provider: {type: String},
     username: {type: String, unique: true, required: true, trim: true},
     mobile: {type: String, unique: true, required: true, trim: true},
