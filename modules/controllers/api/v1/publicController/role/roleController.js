@@ -4,7 +4,7 @@ import {
 import { InitializeController } from "./initializeController";
 
 
-module.exports = new(class RoleController extends InitializeController {
+export default new(class RoleController extends InitializeController {
 
     getGrants = function () {
         let grantList = [];

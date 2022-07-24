@@ -5,7 +5,7 @@ import {
 } from './initializeController'
 
 
-module.exports = new(class loginController extends InitializeController {
+export default new(class loginController extends InitializeController {
 
     async login(req, res, next) {
         try {

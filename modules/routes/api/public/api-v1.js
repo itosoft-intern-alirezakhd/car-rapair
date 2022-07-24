@@ -1,24 +1,27 @@
-const express = require('express');
-const config = require('./config');
+import express from "express"
+import config from '../../../../config';
 const {public : publicController} = config.path.controllersApi.v1
 const {middleware } = config.path
 const {controller} = config.path
 
+//import Controller
+import * as roleController from `${controller}/rolesController`
+import * as userController from `${controller}/usersController`
 
 //auth 
-const registerController = require(`${publicController}/auth/registerController`) 
-const whoController = require(`${publicController}/auth/whoController`) 
-const loginController = require(`${publicController}/auth/loginController`) 
+import  registerController from `${publicController}/auth/registerController`
+import whoController from `${publicController}/auth/whoController`
+import * as loginController from `${publicController}/auth/loginController`
 //car
-const carController = require(`${publicController}/car/carController`) 
+import * as carController from `${publicController}/car/carController`
 //role
-const roleController = require(`${publicController}/role/roleController`) 
+import * as roleController from `${publicController}/role/roleController`
 //user
-const userController = require(`${publicController}/user/userController`) 
+import * as userController from `${publicController}/user/userController`
  
 //import middleware
-const allowLoggedIn = require(`${middleware}/allow-loggedIn-middleware`) 
-const grantAccess = require(`${middleware}/grant-access-middleware`) 
+import allowLoggedIn from `${middleware}/allow-loggedIn-middleware`
+import grantAccess from `${middleware}}/grant-access-middleware`
 
 //Router
 const router = express.Router();
@@ -67,4 +70,4 @@ carRouter.put('/cars/update', allowLoggedIn, carController.updateCar.bind(carCon
 carRouter.delete('/cars/delete', allowLoggedIn, carController.deleteCar.bind(carController))
 router.use('/cars' , carRouter);
 
-module.exports = router
+export default router

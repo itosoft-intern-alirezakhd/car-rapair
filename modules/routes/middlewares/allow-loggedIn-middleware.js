@@ -1,4 +1,4 @@
-module.exports =  async (req, res, next) => {
+export default async (req, res, next) => {
     try {
         const user = res.locals.loggedInUser;
         if (!user)

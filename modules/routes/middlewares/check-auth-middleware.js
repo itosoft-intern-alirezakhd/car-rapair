@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import User from './modules/models/userModel.js'
 
 
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
 	if (req.headers["authorization"]) {
 		const re = new RegExp('Bearer (.*)');
 		let accessToken = req.headers["authorization"].match(re)

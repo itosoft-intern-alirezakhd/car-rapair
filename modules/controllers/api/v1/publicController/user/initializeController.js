@@ -4,7 +4,7 @@ import {hashPassword , validatePassword} from '../../../../helpers/password'
 import Pagination from '../../../../helpers/pagination';
 import response from '../../../../helpers/response'
 
-module.exports =  class InitializeController extends Controller{
+export class InitializeController extends Controller{
     constructor(){
         super();
         (this.model = {User}) , 
