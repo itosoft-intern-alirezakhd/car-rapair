@@ -2,7 +2,7 @@ import emailRegex from 'email-regex'
 import {InitializeController} from './initializeController';
 
 
-export default new(class RegisterController extends InitializeController {
+module.exports = new(class RegisterController extends InitializeController {
 
     async signUp  (req, res, next)  {
         try {

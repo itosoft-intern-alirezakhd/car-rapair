@@ -11,7 +11,7 @@ async function validatePassword(plainPassword, hashedPassword) {
 
 
 
-export {
+module.exports =  {
     hashPassword,
     validatePassword
 }

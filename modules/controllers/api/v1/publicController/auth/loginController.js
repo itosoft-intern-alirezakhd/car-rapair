@@ -5,7 +5,7 @@ import {
 } from './initializeController'
 
 
-export default new(class loginController extends InitializeController {
+module.exports = new(class loginController extends InitializeController {
 
     async login(req, res, next) {
         try {
@@ -59,7 +59,7 @@ export default new(class loginController extends InitializeController {
             })
             const salt = await bcrypt.genSalt(10)
             otp.otp = await bcrypt.hash(otp.otp, salt)
-            const result = await otp.save()
+            await otp.save()
             console.log(OTP)
             const data = JSON.stringify({
                 Code: OTP,

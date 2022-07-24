@@ -1,4 +1,4 @@
-export const configVerify = {
+exports.configVerify = {
     method: 'post',
     url: 'https://RestfulSms.com/api/VerificationCode',
     headers: {
@@ -6,7 +6,7 @@ export const configVerify = {
     }
 };
 
-export const configToken = {
+exports.configToken = {
     method: 'post',
     url: 'https://RestfulSms.com/api/Token',
     headers: {
@@ -18,7 +18,7 @@ export const configToken = {
     }
 };
 
-export const  DATABASE_URL = `mongodb://localhost/salamatKhodro`
+exports.DATABASE_URL = `mongodb+srv://alirezakoohzad:alireza894@cluster0.k8p9o.mongodb.net/?retryWrites=true&w=majority`
 
 
 

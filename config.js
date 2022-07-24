@@ -1,6 +1,6 @@
 const path = require('path')
 
-export default  {
+module.exports =  {
   path: {
     controllersApi: {
       v1: {

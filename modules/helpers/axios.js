@@ -1,4 +1,5 @@
 const axios = require('axios');
+const qs = require('qs');
 
 const axios = async (method ,  url , header , data) =>{
     try {
@@ -20,4 +21,4 @@ const axios = async (method ,  url , header , data) =>{
 }
 
 
-export default axios
+module.exports = axios

@@ -22,4 +22,5 @@ const CarSchema = new mongoose.Schema({
 
 CarSchema.plugin(uniqueValidator);
 const Car = mongoose.model('cars', CarSchema);
-export default Car
+
+module.exports = Car;

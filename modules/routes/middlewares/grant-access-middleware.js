@@ -2,7 +2,7 @@
 import * as roles from '../roles';
 
 
-export default   (action, resource) => {
+module.exports =   (action, resource) => {
     return async (req, res, next) => {
         try {
             const permission = roles.roles.can(req.user.role)[action](resource);

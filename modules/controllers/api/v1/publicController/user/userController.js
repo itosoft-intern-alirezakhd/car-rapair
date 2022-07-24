@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken'
 import { InitializeController } from './initializeController';
 
 
-export default new(class CarController extends InitializeController {
+module.export = new(class CarController extends InitializeController {
 
 
 

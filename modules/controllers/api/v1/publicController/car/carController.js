@@ -1,7 +1,7 @@
 import { InitializeController } from "./initializeController";
 
 
-export default new(class CarController extends InitializeController {
+module.exports = new(class CarController extends InitializeController {
 
     async addCar  (req, res, next)  {
         try {

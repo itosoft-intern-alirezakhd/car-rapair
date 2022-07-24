@@ -10,4 +10,4 @@ const Pagination = body => {
     return {size, page}
 };
 
-export default Pagination
+module.exports = Pagination

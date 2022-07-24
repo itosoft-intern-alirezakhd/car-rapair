@@ -8,7 +8,7 @@ import User from '../models/userModel'
 import Role from '../models/roleModel'
 
 
-export class InitializeController extends Controller{
+module.exports = class InitializeController extends Controller{
     constructor(){
         super();
         (this.model = {User,Otp , Role}) , 

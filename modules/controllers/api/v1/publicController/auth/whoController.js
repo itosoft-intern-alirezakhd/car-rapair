@@ -1,6 +1,6 @@
 import { InitializeController } from "./initializeController"
 
-export default new(class WhoController extends InitializeController {
+module.exports = new(class WhoController extends InitializeController {
 
     async whoAmI  (req, res)  {
         try {

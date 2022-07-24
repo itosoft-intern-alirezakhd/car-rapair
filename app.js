@@ -1,20 +1,24 @@
-import { createRequire } from "module";
-const require = createRequire(import.meta.url);
+// import { createRequire } from "module";
+// const require = createRequire(import.meta.url);
 require("dotenv").config();
-import express from 'express'
-import mongoose from 'mongoose'
-import routes from './routes/route.js'
+const express = require('express');
+const routes = require('./modules/routes/api/public/api-v1');
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+const swaggerUi = require('swagger-ui-express');
+const config = require('./config')
+const {DATABASE_URL} = require('./modules/helpers/const')
+
 const app = express();
-import bodyParser from 'body-parser'
-import swaggerUi from 'swagger-ui-express'
 const swaggerDocument = require('./swagger.json');
+const middleware  = config.path.middleware 
 
 //import middleware 
-import checkAuth from './modules/routes/middlewares/check-auth-middleware'
-import allowCrossDomain from './modules/routes/middlewares/set-header-middleware'
-import errorMiddleware from "./modules/routes/middlewares/error-middleware.js";
+const checkAuth = require(`${middleware}/check-auth-middleware`)
+const allowCrossDomain = require(`${middleware}/set-header-middleware`)
+const errorMiddleware = require(`${middleware}/error-middleware`)
 
-mongoose.connect(`mongodb://localhost/salamatKhodro`, {
+mongoose.connect(DATABASE_URL, {
 	useNewUrlParser: true,
 	useCreateIndex: true,
 	useFindAndModify: false,
