@@ -5,13 +5,10 @@ import express from 'express'
 import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import swaggerUi from 'swagger-ui-express'
-// const {DATABASE_URL} = require('./modules/helpers/const')
 import {DATABASE_URL} from './modules/helpers/const.js'
-import {config} from './config.js'
 import routes from "./modules/routes/api/public/api-v1.js"
 const app = express();
 const swaggerDocument = require('./swagger.json');
-const middleware  = config.path.middleware 
 //import middleware 
 import checkAuthMiddleware from "./modules/routes/middlewares/check-auth-middleware.js";
 import allowCrossDomain from "./modules/routes/middlewares/set-header-middleware.js";

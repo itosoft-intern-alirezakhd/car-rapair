@@ -18,7 +18,7 @@ export const configToken = {
     }
 };
 
-export const  DATABASE_URL = `mongodb://localhost/salamatKhodro`
+export const  DATABASE_URL = "mongodb+srv://alirezakoohzad:alireza894@cluster0.k8p9o.mongodb.net/carRepair?retryWrites=true&w=majority"
 
 
 

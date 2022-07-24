@@ -41,7 +41,7 @@ router.use('/profile' , profileRouter);
 //User
 const userRouter = express.Router();
 userRouter.post('/getAll', allowLoggedIn, grantAccess('readAny', 'user'), userController.getUsers.bind(userController));
-userRouter.post('/create', allowLoggedIn, grantAccess('createAny', 'user'), registerController.signUp.bind(userController));
+userRouter.post('/create', allowLoggedIn, grantAccess('createAny', 'user'), userController.createUser.bind(userController));
 userRouter.put('/update', allowLoggedIn, grantAccess('updateAny', 'user'), userController.updateUser.bind(userController));
 userRouter.delete('/delete', allowLoggedIn, grantAccess('deleteAny', 'user'), userController.deleteUser.bind(userController));
 router.use('/users' , userRouter);
