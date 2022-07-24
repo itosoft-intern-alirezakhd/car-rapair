@@ -5,8 +5,8 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 
 const RoleSchema = new mongoose.Schema({
-    role: {type: String, required: true, unique: true, trim: true},
-    userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user', null: true},
+    role: {type: String, required: true, trim: true},
+    userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user' , require : true},
     extend: [{type: String}],
     permissions: [{
         resource: {type: String, required: true},
