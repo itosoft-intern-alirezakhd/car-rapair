@@ -4,7 +4,15 @@ import { InitializeController } from './initializeController.js';
 
 export default new(class CarController extends InitializeController {
 
+    async createUser (req , res ,next) {
+        jwt.verify(req.body.registerToken, process.env.JWT_SECRET, async (err, decoded) => {
+            if (err && err.message)
+                return this.abort(res , 401 , null ,`${err.message}, please login to obtain a new one` )
+            const otp = await this.model.Otp.findById(decoded.userId)
+            if (!otp) return this.abort(res , 400 , null ,"You use an Expired OTP!" ) 
 
+        });
+    }
 
     async getUsers  (req, res, next) {
         try {

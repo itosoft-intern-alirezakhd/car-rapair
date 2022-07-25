@@ -11,6 +11,5 @@ export const response = async (res, msg, logcode, status, data = null, msgStatus
       status,
       success,
       data: data || null,
-      v: releasesV,
     });
   };

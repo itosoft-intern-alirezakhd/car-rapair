@@ -59,10 +59,10 @@ router.use('/roles' , roleRouter);
 
 //Car
 const carRouter = express.Router();
-carRouter.post('/cars/create', allowLoggedIn, carController.addCar.bind(carController))
-carRouter.post('/cars/getAll', allowLoggedIn, carController.getAll.bind(carController))
-carRouter.put('/cars/update', allowLoggedIn, carController.updateCar.bind(carController))
-carRouter.delete('/cars/delete', allowLoggedIn, carController.deleteCar.bind(carController))
+carRouter.post('/create', allowLoggedIn, carController.addCar.bind(carController))
+carRouter.post('/getAll', allowLoggedIn, carController.getAll.bind(carController))
+carRouter.put('/update', allowLoggedIn, carController.updateCar.bind(carController))
+carRouter.delete('/delete', allowLoggedIn, carController.deleteCar.bind(carController))
 router.use('/cars' , carRouter);
 
 export default router
