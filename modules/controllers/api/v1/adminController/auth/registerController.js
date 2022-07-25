@@ -12,7 +12,7 @@ export default new(class RegisterController extends InitializeController {
     async signUp  (req, res, next)  {
         try {
             const {name,username,email,password,contact,mobile} = req.body;
-            const role = "basic";
+            const role = "basic"
             if (!emailRegex({
                         exact: true
                     }).test(email)) return this.abort(res , 401 , null , "ایمیل با فرمت درست وارد شود" ) 
@@ -41,7 +41,12 @@ export default new(class RegisterController extends InitializeController {
             new this.model.Role({
                 role,
                 userRef : newUser._id,
-                permissions : this.helper.basicPermissions
+                permissions : [
+                    {
+                        action : "readAny",
+                        resource : "profile"
+                    }
+                ]
             }).save()
 
             await newUser.save(async (err, user) => {
@@ -56,16 +61,31 @@ export default new(class RegisterController extends InitializeController {
                 } else {
                     //handle verify acc
                     //send otp verfication
-                    this.helper.sendOtp(newUser._id , newUser.mobile, res);
+                    this.sendOtp(newUser._id , newUser.mobile, res);
+                
                     // await this.model.Otp.deleteMany({
                     //     number: otp.number
                     // })
                     // return this.ok(res , 200 , null , "User registrations is successful.") 
                 }
             });
+        
         } catch (error) {
             next(error)
         }
     };
+
+    async sendOtp(_id , number , res ){
+        const result = await this.helper.otpGenerate(number);
+        res.json({
+            status : "Pending",
+            message : "verification code sent",
+            data : {
+                userId : _id ,
+                number : number,
+                otp : result.code
+            }
+        })
+    }
 
 })()

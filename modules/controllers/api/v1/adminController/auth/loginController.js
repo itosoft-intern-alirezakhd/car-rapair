@@ -48,8 +48,10 @@ export default new(class loginController extends InitializeController {
            const data = await this.helper.otpGenerate(number);
            const {configToken, configVerify} = this.helper;
            const response = await this.helper.axios(configToken.method, configToken.url, configToken.headers, configToken.data)
+           console.log(response);
            configVerify.headers["x-sms-ir-secure-token"] = response.data['TokenKey']
            const result = await this.helper.axios(configVerify.method,configVerify.url,configVerify.headers,data)
+           console.log(result);
            await this.model.Otp.deleteMany({number: number})
            this.ok(res  , null , result.data.Message , result.data.IsSuccessful )
         } catch (error) {
@@ -70,7 +72,21 @@ export default new(class loginController extends InitializeController {
                 });
                 if (!user) {
                     return this.abort(res, 400  , null , "user account doest exist , please signUp")
+                    // const otp = jwt.sign({
+                    //     userId: rightOtpFind._id
+                    // }, process.env.JWT_SECRET, {
+                    //     expiresIn: 36000
+                    // });
+                    // await this.model.Otp.findByIdAndUpdate(rightOtpFind._id, {otp: otp})
+                    // const data = {
+                    //     status: true,
+                    //     register: false,
+                    //     registerToken: otp,
+                    //     number: rightOtpFind.number
+                    // }
+                    // return this.ok(res , 200 , null , data)
                 } else {
+                    // if (!user.active) return this.abort(res , 403 , null ,'User not activated' ) 
                     const accessToken = jwt.sign({
                         userId: user._id
                     }, process.env.JWT_SECRET, {

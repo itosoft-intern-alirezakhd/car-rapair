@@ -12,7 +12,7 @@ export default new(class WhoController extends InitializeController {
             delete data.userRef
             delete data.accessToken
             delete data.__v
-            return this.helper.response(res , null , logcode , 200  , data)
+            return this.helper.response(res , null , null , 200  , data)
         } catch (err) {
             next(error);
         }

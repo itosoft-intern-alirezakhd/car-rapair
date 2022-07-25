@@ -4,6 +4,7 @@ import { InitializeController } from './initializeController.js';
 
 export default new(class CarController extends InitializeController {
 
+    
     async createUser (req , res ,next) {
         jwt.verify(req.body.registerToken, process.env.JWT_SECRET, async (err, decoded) => {
             if (err && err.message)

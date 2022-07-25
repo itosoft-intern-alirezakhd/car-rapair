@@ -12,7 +12,7 @@ export default new(class RegisterController extends InitializeController {
     async signUp  (req, res, next)  {
         try {
             const {name,username,email,password,contact,mobile} = req.body;
-            const role = "basic";
+            const role = "superAdmin"
             if (!emailRegex({
                         exact: true
                     }).test(email)) return this.abort(res , 401 , null , "ایمیل با فرمت درست وارد شود" ) 
@@ -20,7 +20,7 @@ export default new(class RegisterController extends InitializeController {
             let hashedPassword
             if (password) hashedPassword = await this.helper.hashPassword(password);
             else hashedPassword = "undefined"
-            const newUser = new this.model.User({
+            const newSuperAdmin = new this.model.User({
                 name,
                 username,
                 contact,
@@ -30,8 +30,8 @@ export default new(class RegisterController extends InitializeController {
                 mobile: mobile,
                 role: role
             });
-            newUser.accessToken = jwt.sign({
-                userId: newUser._id
+            newSuperAdmin.accessToken = jwt.sign({
+                userId: newSuperAdmin._id
             }, process.env.JWT_SECRET, {
                 expiresIn: "1d"
             });
@@ -40,11 +40,11 @@ export default new(class RegisterController extends InitializeController {
             
             new this.model.Role({
                 role,
-                userRef : newUser._id,
-                permissions : this.helper.basicPermissions
+                userRef : newSuperAdmin._id,
+                permissions : this.helper.superAdminPermissions
             }).save()
 
-            await newUser.save(async (err, user) => {
+            await newSuperAdmin.save(async (err, user) => {
                 if (err) {
                     let message = "";
                     if (err.errors.username) message = `${err.errors.username} `;
@@ -56,16 +56,20 @@ export default new(class RegisterController extends InitializeController {
                 } else {
                     //handle verify acc
                     //send otp verfication
-                    this.helper.sendOtp(newUser._id , newUser.mobile, res);
+                    this.helper.sendOtp(newSuperAdmin._id , newSuperAdmin.mobile, res);
+                
                     // await this.model.Otp.deleteMany({
                     //     number: otp.number
                     // })
                     // return this.ok(res , 200 , null , "User registrations is successful.") 
                 }
             });
+        
         } catch (error) {
             next(error)
         }
     };
+
+   
 
 })()
