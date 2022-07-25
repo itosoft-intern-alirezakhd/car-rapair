@@ -4,6 +4,7 @@ import jwt from 'jsonwebtoken'
 import otpGenerator from 'otp-generator';
 import Otp from '../../../../../models/otp-model.js';
 import bcrypt from 'bcrypt'
+import { data } from 'cheerio/lib/api/attributes.js';
 
 
 export default new(class RegisterController extends InitializeController {
@@ -68,34 +69,15 @@ export default new(class RegisterController extends InitializeController {
         }
     };
 
-
     async sendOtp(_id , number , res ){
-        const OTPCode = otpGenerator.generate(6, {
-            digits: true,
-            lowerCaseAlphabets: false,
-            upperCaseAlphabets: false,
-            specialChars: false
-        })
-        const otp = new this.model.Otp({
-            number: number,
-            otp: OTPCode
-        })
-        const salt = await bcrypt.genSalt(10)
-        otp.otp = await bcrypt.hash(otp.otp, salt);
-        otp.userId = _id;
-        await otp.save()
-        console.log(OTPCode)
-        const data = JSON.stringify({
-            Code: OTPCode,
-            MobileNumber: number
-        });
+        const result = await this.helper.otpGenerate(number);
         res.json({
             status : "Pending",
             message : "verification code sent",
             data : {
                 userId : _id ,
                 number : number,
-                otp : OTPCode
+                otp : result.code
             }
         })
     }

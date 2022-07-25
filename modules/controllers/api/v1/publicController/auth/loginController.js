@@ -45,24 +45,7 @@ export default new(class loginController extends InitializeController {
     async loginWithOTP(req, res , next) {
         try {
             let {number , optionalLoginToken} = req.body;
-            const OTP = otpGenerator.generate(6, {
-                digits: true,
-                lowerCaseAlphabets: false,
-                upperCaseAlphabets: false,
-                specialChars: false
-            })
-            const otp = new this.model.Otp({
-                number: number,
-                otp: OTP
-            })
-            const salt = await bcrypt.genSalt(10)
-            otp.otp = await bcrypt.hash(otp.otp, salt)
-            await otp.save()
-            console.log(OTP)
-            const data = JSON.stringify({
-                Code: OTP,
-                MobileNumber: number
-            });
+           const data = await this.helper.otpGenerate(number);
            const {configToken, configVerify} = this.helper;
            const response = await this.helper.axios(configToken.method, configToken.url, configToken.headers, configToken.data)
            console.log(response);
