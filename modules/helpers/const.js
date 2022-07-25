@@ -1,3 +1,18 @@
+export const TYPE_PERMISSION = {
+    READ : "readAny",
+    CREATE : "createAny",
+    DELETE : "deleteAny",
+    UPDATE : "updateAny"
+}
+export const TYPE_RESOURCE = {
+    USER : "user",
+    PROFILE : "profile",
+    ROLE : "role",
+}
+
+
+
+
 export const configVerify = {
     method: 'post',
     url: 'https://RestfulSms.com/api/VerificationCode',
