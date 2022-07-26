@@ -30,7 +30,7 @@ authRouter.post('/signup', registerController.signUp.bind(registerController) );
 authRouter.post('/login', loginController.login.bind(loginController));
 authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
 authRouter.post('/verifyOTP', loginController.verifyOTP.bind(loginController));
-router.use('/auth/basic' , authRouter);
+router.use('/auth' , authRouter);
 
 //profile 
 const profileRouter = express.Router();
