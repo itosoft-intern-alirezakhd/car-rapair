@@ -6,9 +6,11 @@ import mongoose from 'mongoose'
 import bodyParser from 'body-parser'
 import swaggerUi from 'swagger-ui-express'
 import {DATABASE_URL} from './modules/helpers/const.js'
-import routes from "./modules/routes/api/public/api-v1.js"
 const app = express();
 const swaggerDocument = require('./swagger.json');
+//import router
+import publicApiV1Router from "./modules/routes/api/public/api-v1.js"
+import superAdminApiV1Router from './modules/routes/api/superAdmin/api-v1.js'
 //import middleware 
 import checkAuthMiddleware from "./modules/routes/middlewares/check-auth-middleware.js";
 import allowCrossDomain from "./modules/routes/middlewares/set-header-middleware.js";
@@ -31,7 +33,8 @@ app.use('/api/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(checkAuthMiddleware);
-app.use('/api', routes);
+app.use("/api/v1", publicApiV1Router);
+app.use("/api/v1/superAdmin", superAdminApiV1Router);
 app.use(errorMiddleware);
 
 const Port = 5000;

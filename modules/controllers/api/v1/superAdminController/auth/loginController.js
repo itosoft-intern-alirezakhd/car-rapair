@@ -10,7 +10,7 @@ export default new(class loginController extends InitializeController {
             if (!expiresIn) expiresIn = 36000;
             if (!superAdmin) return this.abort(res,403,null , 'Username does not exist')
             if (!superAdmin.active) return this.abort(res,403,null , 'User not activated')
-            const validPassword = await this.helper.validatePassword(password, user.password);
+            const validPassword = await this.helper.validatePassword(password, superAdmin.password);
             if (!validPassword) return this.abort(res,403,null , 'Password is not correct');
             const accessToken = jwt.sign({
                 userId: superAdmin._id

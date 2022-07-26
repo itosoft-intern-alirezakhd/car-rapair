@@ -1,4 +1,3 @@
-import InitializeController from "./initializeController.js";
 import InitializeController from './initializeController.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
@@ -20,21 +19,7 @@ export default new (class VerifyController extends InitializeController{
                 });
                 if (!superAdmin) {
                     return this.abort(res, 400  , null , "superAdmin account doest exist , please signUp")
-                    // const otp = jwt.sign({
-                    //     userId: rightOtpFind._id
-                    // }, process.env.JWT_SECRET, {
-                    //     expiresIn: 36000
-                    // });
-                    // await this.model.Otp.findByIdAndUpdate(rightOtpFind._id, {otp: otp})
-                    // const data = {
-                    //     status: true,
-                    //     register: false,
-                    //     registerToken: otp,
-                    //     number: rightOtpFind.number
-                    // }
-                    // return this.ok(res , 200 , null , data)
                 } else {
-                    // if (!user.active) return this.abort(res , 403 , null ,'User not activated' ) 
                     const accessToken = jwt.sign({
                         userId: superAdmin._id
                     }, process.env.JWT_SECRET, {

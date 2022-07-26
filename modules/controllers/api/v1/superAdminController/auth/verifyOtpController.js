@@ -1,4 +1,3 @@
-import InitializeController from "./initializeController.js";
 import InitializeController from './initializeController.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'

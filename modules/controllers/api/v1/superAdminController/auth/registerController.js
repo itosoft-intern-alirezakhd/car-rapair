@@ -11,6 +11,7 @@ export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
     async signUp  (req, res, next)  {
         try {
+            console.log("FFFFF");
             const {name,username,email,password,contact,mobile} = req.body;
             const role = "superAdmin"
             if (!emailRegex({

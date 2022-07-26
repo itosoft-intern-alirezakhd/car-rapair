@@ -3,14 +3,11 @@ import express from "express"
 import  registerController from '../../../controllers/api/v1/publicController/auth/registerController.js'
 import whoController from '../../../controllers/api/v1/publicController/auth/whoController.js'
 import loginController from '../../../controllers/api/v1/publicController/auth/loginController.js'
-import verifyOtpController from "../../../controllers/api/v1/superAdminController/auth/verifyOtpController.js";
+import verifyOtpController from "../../../controllers/api/v1/publicController/auth/verifyOtpController.js";
 //profile
 import profileController from "../../../controllers/api/v1/publicController/profile/profileController.js";
 //car
 import  carController from '../../../controllers/api/v1/publicController/car/carController.js'
-//user
-import  userController from '../../../controllers/api/v1/adminController/user/userController.js'
-
 //import middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'
