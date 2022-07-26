@@ -1,14 +1,13 @@
 import express from "express"
-import {config} from '../../../../config.js';
-
 //auth 
 import  registerController from '../../../controllers/api/v1/publicController/auth/registerController.js'
 import whoController from '../../../controllers/api/v1/publicController/auth/whoController.js'
 import loginController from '../../../controllers/api/v1/publicController/auth/loginController.js'
+import verifyOtpController from "../../../controllers/api/v1/superAdminController/auth/verifyOtpController.js";
+//profile
+import profileController from "../../../controllers/api/v1/publicController/profile/profileController.js";
 //car
 import  carController from '../../../controllers/api/v1/publicController/car/carController.js'
-//role
-import  roleController from '../../../controllers/api/v1/adminController/role/roleController.js'
 //user
 import  userController from '../../../controllers/api/v1/adminController/user/userController.js'
 
@@ -29,12 +28,12 @@ const authRouter = express.Router();
 authRouter.post('/signup', registerController.signUp.bind(registerController) );
 authRouter.post('/login', loginController.login.bind(loginController));
 authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
-authRouter.post('/verifyOTP', loginController.verifyOTP.bind(loginController));
+authRouter.post('/verifyOTP', verifyOtpController.verifyOTP.bind(verifyOtpController));
 router.use('/auth' , authRouter);
 
 //profile 
 const profileRouter = express.Router();
-profileRouter.get('/', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), userController.profile.bind(userController));
+profileRouter.get('/', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), profileController.profile.bind(profileController));
 router.use('/profile' , profileRouter);
 
 // //User

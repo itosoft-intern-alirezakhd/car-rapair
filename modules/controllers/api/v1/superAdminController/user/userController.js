@@ -158,25 +158,4 @@ export default new(class CarController extends InitializeController {
             });
         }
     };
-
-
-    async profile  (req, res, next)  {
-        if (req.body) {
-            console.log(req.body);
-            const {
-                username,
-                contact,
-                name,
-                email,
-                role
-            } = req.body;
-            return  res.json({
-                user: req.user
-            })
-        } else return res.json({
-            user: req.user
-        })
-
-    };
-
 })()
