@@ -6,7 +6,7 @@ export default   (action, resource) => {
     return async (req, res, next) => {
         try {
             const user = res.locals.loggedInUser;
-            const role = await Role.findOne({userRef : user._id })
+            const role = await Role.findOne({_id : user.role })
             let flag=  false;
             role.permissions.forEach(per => {
                 if(per.action === action && per.resource === resource){
