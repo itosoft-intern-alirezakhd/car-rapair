@@ -2,6 +2,7 @@
 import mongoose from "mongoose";
 // const uniqueValidator = require('mongoose-unique-validator');
 import uniqueValidator from 'mongoose-unique-validator'
+import User from "./user-model.js";
 
 
 const RoleSchema = new mongoose.Schema({
@@ -13,6 +14,16 @@ const RoleSchema = new mongoose.Schema({
         action: {type: String},
         attributes: {type: String, default: '*'},
     }],
+});
+
+RoleSchema.pre('remove', async function(next) {
+    console.log(this._id);
+    try {
+            await User.deleteMany({ 'role': this._id });
+        next();
+    } catch (e) {
+        console.log(e);
+    }
 });
 
 RoleSchema.plugin(uniqueValidator);
