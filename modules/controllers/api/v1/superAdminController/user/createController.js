@@ -20,18 +20,22 @@ export default new ( class CreateController extends InitializeController{
                 password: hashedPassword,
                 active: active,
                 mobile: mobile,
-                role: role
+                
             });
             newUser.accessToken = jwt.sign({
                 userId: newUser._id
             }, process.env.JWT_SECRET, {
                 expiresIn: "1d"
             });
-            await new Role({
-                role,
-                userRef : newUser._id,
-                permissions : permissions
-            }).save()
+
+            const roleObj = await this.model.Role.findOne({role : role});
+            newUser.role = roleObj._id;
+            
+            // await new Role({
+            //     role,
+            //     userRef : newUser._id,
+            //     permissions : permissions
+            // }).save()
 
             const user = await newUser.save();
             if(!user) this.abort(res , 400 , null , 'user saving unsuccessful')

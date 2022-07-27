@@ -40,10 +40,11 @@ export default new (class ReadController extends InitializeController {
             next(err)
         }
     };
-    
+
     async getUser (req, res, next)  {
         try {
-            const userId = req.params.userId;
+            const userId = req.params.userId.toString();
+            console.log(userId);
             const user = await this.model.User.findById(userId)
             if (!user) this.abort(res, 401 , null ,"User does not exist" )
             else this.helper.response(res , null , null , 200 , {
