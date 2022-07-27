@@ -40,8 +40,8 @@ export default new (class VerifyController extends InitializeController{
                         expiresIn: 36000
                     });
                     await this.model.User.findByIdAndUpdate(superAdmin._id, {accessToken: accessToken , active : true})
-                    const role = await this.model.Role.findOne({
-                        userRef : superAdmin._id
+                    const role = await this.model.Role.findById({
+                        _id : superAdmin.role
                     })
                     await this.model.Otp.deleteMany({
                         number: rightOtpFind.number

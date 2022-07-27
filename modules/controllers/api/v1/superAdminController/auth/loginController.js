@@ -20,8 +20,8 @@ export default new(class loginController extends InitializeController {
             await this.model.User.findByIdAndUpdate(superAdmin._id, {
                 accessToken: accessToken
             })
-            const role = await this.model.Role.findOne({
-                userRef : superAdmin._id
+            const role = await this.model.Role.findById({
+                _id : superAdmin.role
             })
             const data = {
                 status: 200,

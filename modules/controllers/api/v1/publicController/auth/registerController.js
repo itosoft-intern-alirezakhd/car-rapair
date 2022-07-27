@@ -28,8 +28,8 @@ export default new(class RegisterController extends InitializeController {
                 password: hashedPassword,
                 active: false,
                 mobile: mobile,
-                role: role
             });
+
             newUser.accessToken = jwt.sign({
                 userId: newUser._id
             }, process.env.JWT_SECRET, {
@@ -38,25 +38,31 @@ export default new(class RegisterController extends InitializeController {
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
             
-            new this.model.Role({
-                role,
-                userRef : newUser._id,
-                permissions : this.helper.basicPermissions
-            }).save()
+            const roleObj = await this.model.Role.findOne({role : role});
+            newUser.role = roleObj._id;
 
-            await newUser.save(async (err, user) => {
+            // new this.model.Role({
+            //     role,
+            //     permissions : this.helper.basicPermissions
+            // }).save()
+
+            newUser.save(async (err, user) => {
                 if (err) {
                     let message = "";
-                    if (err.errors.username) message = `${err.errors.username} `;
-                    if (err.errors.email) message += `${err.errors.email} `;
-                    if (err.errors.password) message += `${err.errors.password}`;
-                    if (err.errors.mobile) message += `${err.errors.mobile}`;
+                    if (err.errors.username)
+                        message = `${err.errors.username} `;
+                    if (err.errors.email)
+                        message += `${err.errors.email} `;
+                    if (err.errors.password)
+                        message += `${err.errors.password}`;
+                    if (err.errors.mobile)
+                        message += `${err.errors.mobile}`;
                     message = message.trim();
-                    return this.abort(res , 401 , null , message ) 
+                    return this.abort(res, 401, null, message);
                 } else {
                     //handle verify acc
                     //send otp verfication
-                    this.helper.sendOtp(newUser._id , newUser.mobile, res);
+                    this.helper.sendOtp(newUser._id, newUser.mobile, res);
                     // await this.model.Otp.deleteMany({
                     //     number: otp.number
                     // })

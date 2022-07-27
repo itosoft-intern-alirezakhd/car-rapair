@@ -14,20 +14,20 @@ export default new (class VerifyController extends InitializeController{
             const rightOtpFind = optHolder;
             const validUser = await bcrypt.compare(req.body.otp, rightOtpFind.otp)
             if (rightOtpFind.number === req.body.number && validUser) {
-                let superAdmin = await this.model.User.findOne({
+                let basicUser = await this.model.User.findOne({
                     mobile: rightOtpFind.number
                 });
-                if (!superAdmin) {
-                    return this.abort(res, 400  , null , "superAdmin account doest exist , please signUp")
+                if (!basicUser) {
+                    return this.abort(res, 400  , null , "basicUser account doest exist , please signUp")
                 } else {
                     const accessToken = jwt.sign({
-                        userId: superAdmin._id
+                        userId: basicUser._id
                     }, process.env.JWT_SECRET, {
                         expiresIn: 36000
                     });
-                    await this.model.User.findByIdAndUpdate(superAdmin._id, {accessToken: accessToken , active : true})
-                    const role = await this.model.Role.findOne({
-                        userRef : superAdmin._id
+                    await this.model.User.findByIdAndUpdate(basicUser._id, {accessToken: accessToken , active : true})
+                    const role = await this.model.Role.findById({
+                        _id : basicUser.role
                     })
                     await this.model.Otp.deleteMany({
                         number: rightOtpFind.number
@@ -39,8 +39,8 @@ export default new (class VerifyController extends InitializeController{
                         data: accessToken,
                         exp: jwt.decode(accessToken).exp,
                         profile: {
-                            name: superAdmin.name,
-                            email: superAdmin.email
+                            name: basicUser.name,
+                            email: basicUser.email
                         },
                         permissions: role.permissions,
                     }

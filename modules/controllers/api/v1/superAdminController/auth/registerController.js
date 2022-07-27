@@ -11,7 +11,6 @@ export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
     async signUp  (req, res, next)  {
         try {
-            console.log("FFFFF");
             const {name,username,email,password,contact,mobile} = req.body;
             const role = "superAdmin"
             if (!emailRegex({
@@ -28,8 +27,7 @@ export default new(class RegisterController extends InitializeController {
                 email,
                 password: hashedPassword,
                 active: false,
-                mobile: mobile,
-                role: role
+                mobile: mobile
             });
             newSuperAdmin.accessToken = jwt.sign({
                 userId: newSuperAdmin._id
@@ -39,13 +37,16 @@ export default new(class RegisterController extends InitializeController {
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
             
-            new this.model.Role({
-                role,
-                userRef : newSuperAdmin._id,
-                permissions : this.helper.superAdminPermissions
-            }).save()
+            const roleObj = await this.model.Role.findOne({role : role});
+            newSuperAdmin.role = roleObj._id;
 
-            await newSuperAdmin.save(async (err, user) => {
+            // new this.model.Role({
+            //     role,
+            //     userRef : newSuperAdmin._id,
+            //     permissions : this.helper.superAdminPermissions
+            // }).save()
+
+            newSuperAdmin.save(async (err, user) => {
                 if (err) {
                     let message = "";
                     if (err.errors.username) message = `${err.errors.username} `;
