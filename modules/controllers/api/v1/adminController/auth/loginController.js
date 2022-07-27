@@ -1,7 +1,4 @@
-import otpGenerator from 'otp-generator'
-import Otp from '../../../../../models/otp-model.js';
 import InitializeController from './initializeController.js'
-import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
 export default new(class loginController extends InitializeController {
@@ -9,22 +6,22 @@ export default new(class loginController extends InitializeController {
     async login(req, res, next) {
         try {
             let {username,expiresIn,password} = req.body;
-            let user = await this.model.User.findOne({username});
+            let admin = await this.model.User.findOne({username});
             if (!expiresIn) expiresIn = 36000;
-            if (!user) return this.abort(res,403,null , 'Username does not exist')
-            if (!user.active) return this.abort(res,403,null , 'User not activated')
-            const validPassword = await this.helper.validatePassword(password, user.password);
+            if (!admin) return this.abort(res,403,null , 'Username does not exist')
+            if (!admin.active) return this.abort(res,403,null , 'User not activated')
+            const validPassword = await this.helper.validatePassword(password, admin.password);
             if (!validPassword) return this.abort(res,403,null , 'Password is not correct');
             const accessToken = jwt.sign({
-                userId: user._id
+                userId: admin._id
             }, process.env.JWT_SECRET, {
                 expiresIn: expiresIn
             });
-            await this.model.User.findByIdAndUpdate(user._id, {
+            await this.model.User.findByIdAndUpdate(admin._id, {
                 accessToken: accessToken
             })
-            const role = await this.model.Role.findOne({
-                userRef : user._id
+            const role = await this.model.Role.findById({
+                _id : admin.role
             })
             const data = {
                 status: 200,
@@ -32,8 +29,8 @@ export default new(class loginController extends InitializeController {
                 data: accessToken,
                 exp: jwt.decode(accessToken).exp,
                 profile: {
-                    name: user.name,
-                    email: user.email
+                    name: admin.name,
+                    email: admin.email
                 },
                 permissions: role.permissions,
             }
@@ -58,65 +55,6 @@ export default new(class loginController extends InitializeController {
             next(error)
         }
     };
-    async verifyOTP(req, res,next) {
-        try {
-            const optHolder = await this.model.Otp.findOne({
-                number: req.body.number
-            });
-            if (optHolder.length === 0) return this.abort(res, 400 , null , "You use an Expired OTP!") 
-            const rightOtpFind = optHolder;
-            const validUser = await bcrypt.compare(req.body.otp, rightOtpFind.otp)
-            if (rightOtpFind.number === req.body.number && validUser) {
-                let user = await this.model.User.findOne({
-                    mobile: rightOtpFind.number
-                });
-                if (!user) {
-                    return this.abort(res, 400  , null , "user account doest exist , please signUp")
-                    // const otp = jwt.sign({
-                    //     userId: rightOtpFind._id
-                    // }, process.env.JWT_SECRET, {
-                    //     expiresIn: 36000
-                    // });
-                    // await this.model.Otp.findByIdAndUpdate(rightOtpFind._id, {otp: otp})
-                    // const data = {
-                    //     status: true,
-                    //     register: false,
-                    //     registerToken: otp,
-                    //     number: rightOtpFind.number
-                    // }
-                    // return this.ok(res , 200 , null , data)
-                } else {
-                    // if (!user.active) return this.abort(res , 403 , null ,'User not activated' ) 
-                    const accessToken = jwt.sign({
-                        userId: user._id
-                    }, process.env.JWT_SECRET, {
-                        expiresIn: 36000
-                    });
-                    await this.model.User.findByIdAndUpdate(user._id, {accessToken: accessToken , active : true})
-                    const role = await this.model.Role.findOne({
-                        userRef : user._id
-                    })
-                    await this.model.Otp.deleteMany({
-                        number: rightOtpFind.number
-                    })
-                    const data = {
-                        status: true,
-                        register: true,
-                        family: "SUCCESSFUL",
-                        data: accessToken,
-                        exp: jwt.decode(accessToken).exp,
-                        profile: {
-                            name: user.name,
-                            email: user.email
-                        },
-                        permissions: role.permissions,
-                    }
-                    return this.ok(res,  200 , null , data)
-                }
-            } else return this.abort(res , 400 , null , "You use an Expired OTP!") 
-        } catch (error) {
-            next(error)
-        }
-    };
+    
 
 })()

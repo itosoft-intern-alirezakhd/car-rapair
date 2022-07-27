@@ -11,7 +11,9 @@ export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
     async signUp  (req, res, next)  {
         try {
-            const {name,username,email,password,contact,mobile} = req.body;
+            const {name,username,email,password,contact,mobile,registerToken} = req.body;
+            if(registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN) 
+                return this.abort(res , 401 , null , 'you can not register as  superAdmin');
             const role = "superAdmin"
             if (!emailRegex({
                         exact: true
