@@ -41,7 +41,7 @@ export default new (class UpdateController extends InitializeController{
                 };
             }
             if (Object.keys(update).length === 0)
-                return this.helper.response(res , null , logcode , 200 ,{
+                return this.helper.response(res , null , null , 200 ,{
                     message: "No items selected"
                 }) 
             this.model.User.findByIdAndUpdate(_id, update).then(response => {
