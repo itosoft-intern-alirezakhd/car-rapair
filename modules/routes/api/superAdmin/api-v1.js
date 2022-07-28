@@ -17,7 +17,7 @@ import verifyOtpController from "../../../controllers/api/v1/superAdminControlle
 //middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'
-import isSuperAdminMiddleware from '../../middlewares/is-superAdmin-middleware.js';
+import isSuperAdminMiddleware from '../../middlewares/check-role-middleware.js';
 
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";

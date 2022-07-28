@@ -28,7 +28,7 @@ export default new(class RegisterController extends InitializeController {
                 password: hashedPassword,
                 active: false,
                 mobile: mobile,
-                role : {role}
+                role : [role]
             });
             newAdmin.accessToken = jwt.sign({
                 userId: newAdmin._id
@@ -41,11 +41,7 @@ export default new(class RegisterController extends InitializeController {
             // const roleObj = await this.model.Role.findOne({role : role});
             // newAdmin.role = roleObj._id;
 
-            new this.model.Role({
-                role,
-                userRef : newSuperAdmin._id,
-                permissions : this.helper.superAdminPermissions
-            }).save()
+            
 
             newAdmin.save(async (err, user) => {
                 if (err) {
@@ -59,6 +55,11 @@ export default new(class RegisterController extends InitializeController {
                 } else {
                     //handle verify acc
                     //send otp verfication
+                    await new this.model.Role({
+                        role,
+                        userRef : newAdmin._id,
+                        permissions : []
+                    }).save()
                     this.helper.sendOtp(newAdmin._id , newAdmin.mobile, res);
                 
                     // await this.model.Otp.deleteMany({

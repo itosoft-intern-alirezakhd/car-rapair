@@ -21,7 +21,7 @@ import grantAccess from '../../middlewares/grant-access-middleware.js'
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
 import isAdminMiddleware from "../../middlewares/is-admin-middleware.js";
-import isSuperAdminMiddleware from '../../middlewares/is-superAdmin-middleware.js';
+import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
 const router = express.Router();
 
 //User
@@ -31,7 +31,7 @@ userRouter.post('/getAll',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER)
 userRouter.get('/getUser/:userId',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER), readUserController.getUser.bind(readUserController));
 userRouter.put('/update',grantAccess(TYPE_PERMISSION.UPDATE, TYPE_RESOURCE.USER), updateUserController.updateUser.bind(updateUserController));
 userRouter.delete('/delete',grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.USER), destroyUserController.deleteUser.bind(destroyUserController));
-router.use('/users' ,allowLoggedIn, isSuperAdminMiddleware , isAdminMiddleware , userRouter);
+router.use('/users' ,allowLoggedIn, checkRoleMiddleware(["superAdmin" , "admin"])  , userRouter);
 
 //Role
 const roleRouter = express.Router();
@@ -41,7 +41,7 @@ roleRouter.get('/getRole/:roleId', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOUR
 roleRouter.put('/update',  grantAccess(TYPE_PERMISSION.UPDATE, TYPE_RESOURCE.ROLE), updateRoleController.updateRole.bind(updateRoleController));
 roleRouter.delete('/delete', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.ROLE), destroyRoleController.deleteRole.bind(destroyRoleController));
 roleRouter.get('/distinct', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), distinctRoleController.distinct.bind(distinctRoleController));
-router.use('/roles',allowLoggedIn , isSuperAdminMiddleware , isAdminMiddleware , roleRouter);
+router.use('/roles',allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
 
 
 export default router
