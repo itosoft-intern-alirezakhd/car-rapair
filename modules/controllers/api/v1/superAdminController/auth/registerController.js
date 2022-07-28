@@ -12,7 +12,8 @@ export default new(class RegisterController extends InitializeController {
     async signUp  (req, res, next)  {
         try {
             const {name,username,email,password,contact,mobile,registerToken} = req.body;
-            if(registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN) 
+            if(registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN.toString() ||
+                 email !==process.env.SUPER_ADMIN_EMAIL.toString() ) 
                 return this.abort(res , 401 , null , 'you can not register as  superAdmin');
             const role = "superAdmin"
             if (!emailRegex({
@@ -29,7 +30,8 @@ export default new(class RegisterController extends InitializeController {
                 email,
                 password: hashedPassword,
                 active: false,
-                mobile: mobile
+                mobile: mobile,
+                role : [role]
             });
             newSuperAdmin.accessToken = jwt.sign({
                 userId: newSuperAdmin._id
@@ -39,14 +41,14 @@ export default new(class RegisterController extends InitializeController {
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
             
-            const roleObj = await this.model.Role.findOne({role : role});
-            newSuperAdmin.role = roleObj._id;
+            // const roleObj = await this.model.Role.findOne({role : role});
+            // newSuperAdmin.role = roleObj._id;
 
-            // new this.model.Role({
-            //     role,
-            //     userRef : newSuperAdmin._id,
-            //     permissions : this.helper.superAdminPermissions
-            // }).save()
+            new this.model.Role({
+                role,
+                userRef : newSuperAdmin._id,
+                permissions : this.helper.superAdminPermissions
+            }).save()
 
             newSuperAdmin.save(async (err, user) => {
                 if (err) {

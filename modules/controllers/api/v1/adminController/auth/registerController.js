@@ -27,7 +27,8 @@ export default new(class RegisterController extends InitializeController {
                 email,
                 password: hashedPassword,
                 active: false,
-                mobile: mobile
+                mobile: mobile,
+                role : {role}
             });
             newAdmin.accessToken = jwt.sign({
                 userId: newAdmin._id
@@ -37,14 +38,14 @@ export default new(class RegisterController extends InitializeController {
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
             
-            const roleObj = await this.model.Role.findOne({role : role});
-            newAdmin.role = roleObj._id;
+            // const roleObj = await this.model.Role.findOne({role : role});
+            // newAdmin.role = roleObj._id;
 
-            // new this.model.Role({
-            //     role,
-            //     userRef : newSuperAdmin._id,
-            //     permissions : this.helper.superAdminPermissions
-            // }).save()
+            new this.model.Role({
+                role,
+                userRef : newSuperAdmin._id,
+                permissions : this.helper.superAdminPermissions
+            }).save()
 
             newAdmin.save(async (err, user) => {
                 if (err) {

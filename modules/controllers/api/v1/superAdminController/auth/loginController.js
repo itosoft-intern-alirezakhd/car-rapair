@@ -20,8 +20,8 @@ export default new(class loginController extends InitializeController {
             await this.model.User.findByIdAndUpdate(superAdmin._id, {
                 accessToken: accessToken
             })
-            const role = await this.model.Role.findById({
-                _id : superAdmin.role
+            const roles = await this.model.Role.find({
+                userRef : superAdmin._id
             })
             const data = {
                 status: 200,
@@ -32,7 +32,7 @@ export default new(class loginController extends InitializeController {
                     name: superAdmin.name,
                     email: superAdmin.email
                 },
-                permissions: role.permissions,
+                permissions:  roles.map((r)=> r.permissions),
             }
             return this.helper.response(res , null , null , 200 , data )
         } catch (error) {

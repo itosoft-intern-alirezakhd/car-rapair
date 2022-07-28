@@ -6,8 +6,8 @@ import User from "./user-model.js";
 
 
 const RoleSchema = new mongoose.Schema({
-    role: {type: String, required: true, unique : true , trim: true},
-    // userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user' , require : true},
+    role: {type: String, required: true , trim: true},
+    userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     extend: [{type: String}],
     permissions: [{
         resource: {type: String},
@@ -16,15 +16,15 @@ const RoleSchema = new mongoose.Schema({
     }],
 });
 
-RoleSchema.pre('remove', async function(next) {
-    console.log(this._id);
-    try {
-            await User.deleteMany({ 'role': this._id });
-        next();
-    } catch (e) {
-        console.log(e);
-    }
-});
+// RoleSchema.pre('remove', async function(next) {
+//     console.log(this._id);
+//     try {
+//             await User.deleteMany({ 'role': this._id });
+//         next();
+//     } catch (e) {
+//         console.log(e);
+//     }
+// });
 
 RoleSchema.plugin(uniqueValidator);
 const Role = mongoose.model('role', RoleSchema);

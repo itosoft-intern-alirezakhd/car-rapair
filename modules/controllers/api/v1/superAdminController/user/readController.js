@@ -47,7 +47,7 @@ export default new (class ReadController extends InitializeController {
             console.log(userId);
             const user = await this.model.User.findById(userId)
             if (!user) this.abort(res, 401 , null ,"User does not exist" )
-            else this.helper.response(res , null , null , 200 , {
+            else this.helper.response(res , "successfully get User" , null , 200 , {
                 data: user
             }) 
         } catch (error) {

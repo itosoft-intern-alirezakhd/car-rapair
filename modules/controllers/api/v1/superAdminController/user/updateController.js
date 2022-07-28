@@ -11,7 +11,6 @@ export default new (class UpdateController extends InitializeController{
                 email,
                 password,
                 active,
-                role="basic",
                 _id,
                 mobile
             } = req.body;
@@ -21,12 +20,8 @@ export default new (class UpdateController extends InitializeController{
             if (email) update.email = email;
             if (mobile) update.mobile = mobile;
             if (active !== undefined) update.active = active;
-            if (role) {
-                const roleObj = await this.model.Role.findOne({role : role});
-                update.role = roleObj._id;
-            }
             if (provider) update.provider = provider;
-
+            if(!_id) return this.abort(res , 404 , null  , "user not found")
             // const userId = req.params.userId;
             if (password) {
                 const hashedPassword = await this.helper.hashPassword(password);

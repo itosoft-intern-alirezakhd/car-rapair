@@ -4,19 +4,19 @@ import uniqueValidator from 'mongoose-unique-validator'
 
 const UserSchema = new mongoose.Schema({
     name: {type: String},
-    userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user', null: true},
+    // userRef: {type: mongoose.Schema.Types.ObjectId, ref: 'user', null: true},
     provider: {type: String},
     username: {type: String, unique: true, required: true, trim: true},
     mobile: {type: String, unique: true, required: true, trim: true},
     contact: {type: String},
     email: {type: String, required: true, unique: true, trim: true},
     password: {type: String, required: true},
-    role: {
-        type: mongoose.Schema.Types.ObjectId
-        , ref: 'role' 
-        // type: String, default: 'basic',
+    role: [{
+        // type: mongoose.Schema.Types.ObjectId
+        // , ref: 'role' 
+        type: String, default: 'basic',
         // enum: ["basic", "admin", "superAdmin"]
-    },
+    }],
     credit: {type: Number}, 
     accessToken: {type: String},
     active: {type: Boolean},

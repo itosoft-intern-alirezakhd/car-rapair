@@ -7,8 +7,8 @@ export default new (class DestroyController extends InitializeController{
             const userId = req.body._id;
             if (userId === res.locals.loggedInUser._id.toString()) return this.abort(res, 401 , null ,'Not Access!' )
             this.model.User.findByIdAndDelete(userId).then(async (response) => {
-                // let role = await Role.findOne({userRef : userId});
-                // await role.remove();
+                let role = await Role.findOne({userRef : userId , role : res.locals.loggedInUser.role});
+                await role.remove();
                 if (response) return this.helper.response(res , 'User has been deleted' , null , 200 , {
                     user : response
                 }) 

@@ -6,8 +6,8 @@ export default async (req , res, next)=>{
     let userLogged = res.locals.loggedInUser;
     if(!userLogged) return res.status(401).json({message : "user does not exist"})
     let user = await User.findOne({_id : userLogged._id });
-        const role = await Role.findById({
-            _id : user.role
+        const role = await Role.findOne({
+            userRef : user._id  , role : user.role
         })
         if(!role){
             return res.status(401).json({message : "token is wrong"});
