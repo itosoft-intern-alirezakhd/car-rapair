@@ -1,4 +1,4 @@
-import { InitializeController } from "./initializeController.js";
+import { InitializeController } from "../../superAdminController/role/initializeController.js";
 import mongodb from 'mongodb'
 
 export default new (class ReadController extends InitializeController{

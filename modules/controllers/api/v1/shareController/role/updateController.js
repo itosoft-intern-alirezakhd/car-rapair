@@ -1,4 +1,4 @@
-import { InitializeController } from "./initializeController.js";
+import { InitializeController } from "../../superAdminController/role/initializeController.js";
 
 
 export default new (class updateController extends InitializeController{

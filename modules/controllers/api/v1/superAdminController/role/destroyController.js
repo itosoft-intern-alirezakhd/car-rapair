@@ -1,5 +1,5 @@
 import User from "../../../../../models/user-model.js";
-import { InitializeController } from "../../superAdminController/role/initializeController.js";
+import { InitializeController } from "./initializeController.js";
 
 
 export default new (class destroyController extends InitializeController{
