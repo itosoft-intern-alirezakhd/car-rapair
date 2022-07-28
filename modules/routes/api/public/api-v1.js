@@ -1,7 +1,7 @@
 import express from "express"
 //auth 
 import  registerController from '../../../controllers/api/v1/publicController/auth/registerController.js'
-import whoController from '../../../controllers/api/v1/publicController/auth/whoController.js'
+import whoController from '../../../controllers/api/v1/share/whoController.js'
 import loginController from '../../../controllers/api/v1/publicController/auth/loginController.js'
 import verifyOtpController from "../../../controllers/api/v1/publicController/auth/verifyOtpController.js";
 //profile

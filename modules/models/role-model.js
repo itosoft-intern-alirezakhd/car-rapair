@@ -16,15 +16,7 @@ const RoleSchema = new mongoose.Schema({
     }],
 });
 
-// RoleSchema.pre('remove', async function(next) {
-//     console.log(this._id);
-//     try {
-//             await User.deleteMany({ 'role': this._id });
-//         next();
-//     } catch (e) {
-//         console.log(e);
-//     }
-// });
+
 
 RoleSchema.plugin(uniqueValidator);
 const Role = mongoose.model('role', RoleSchema);

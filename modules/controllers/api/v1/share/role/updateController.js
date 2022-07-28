@@ -5,14 +5,14 @@ export default new (class updateController extends InitializeController{
 
     async updateRole  (req, res, next) {
         try {
-            const {role , extend , permissions } = req.body;
+            const {roleId,role , extend , permissions } = req.body;
             let updateRole = {};
             if(role) updateRole.role  = role;
             if(extend) updateRole.extend  = extend;
             if(permissions) updateRole.permissions  = permissions;
             if(updateRole  === {})
                 return this.abort(res , 400 , null , "information for updating role is not enough")
-            const roleId = req.body.roleId;
+            
             await this.model.Role.findByIdAndUpdate(roleId, updateRole)
             this.helper.response(res, null , null , 200 ,{
                 success: true,

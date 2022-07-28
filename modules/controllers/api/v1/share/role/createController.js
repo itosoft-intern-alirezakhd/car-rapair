@@ -12,7 +12,7 @@ export default new (class createController extends InitializeController{
                 permissions,
                 userId
             } = req.body;
-            if(userId  === req.user._id && req.user.role  === "admin" ) return this.abort (res , 401 , null , "you can not add role for own ")
+            if(userId  === req.user._id && (req.user.role  === "superAdmin" || req.user.role  === "admin" ) ) return this.abort (res , 401 , null , "you can not add role for own ")
             const user = await User.findById(userId);
             if(!user) return this.abort(res , 404 , null , "this user does not exist ")
             const isRoleExist = await this.model.Role.findOne({role : role })
