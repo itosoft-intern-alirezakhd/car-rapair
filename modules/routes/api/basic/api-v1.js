@@ -1,14 +1,14 @@
 import express from "express"
 //auth 
-import  registerController from '../../../controllers/api/v1/publicController/auth/registerController.js'
-import whoController from '../../../controllers/api/v1/share/whoController.js'
-import loginController from '../../../controllers/api/v1/publicController/auth/loginController.js'
-import verifyOtpController from "../../../controllers/api/v1/publicController/auth/verifyOtpController.js";
+import  registerController from '../../../controllers/api/v1/basicController/auth/registerController.js'
+import whoController from '../../../controllers/api/v1/shareController/whoController.js'
+import loginController from '../../../controllers/api/v1/basicController/auth/loginController.js'
+import verifyOtpController from "../../../controllers/api/v1/basicController/auth/verifyOtpController.js";
 //profile
-import readProfileController from "../../../controllers/api/v1/publicController/profile/readController.js";
-import updateProfileController from "../../../controllers/api/v1/publicController/profile/updateController.js";
+import readProfileController from "../../../controllers/api/v1/basicController/profile/readController.js";
+import updateProfileController from "../../../controllers/api/v1/basicController/profile/updateController.js";
 //car
-import  carController from '../../../controllers/api/v1/publicController/car/carController.js'
+import  carController from '../../../controllers/api/v1/basicController/car/carController.js'
 //import middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'

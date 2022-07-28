@@ -9,7 +9,7 @@ import {DATABASE_URL} from './modules/helpers/const.js'
 const app = express();
 const swaggerDocument = require('./swagger.json');
 //import router
-import publicApiV1Router from "./modules/routes/api/public/api-v1.js"
+import basicApiV1Router from "./modules/routes/api/basic/api-v1.js"
 import superAdminApiV1Router from './modules/routes/api/superAdmin/api-v1.js'
 import adminApiRouter from './modules/routes/api/admin/api-v1.js'
 import shareApiRouter from './modules/routes/api/share/api-v1.js'
@@ -35,10 +35,10 @@ app.use('/api/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(checkAuthMiddleware);
-app.use("/api/v1", publicApiV1Router);
+app.use("/api/v1/basic", basicApiV1Router);
 app.use("/api/v1/admin", adminApiRouter);
 app.use("/api/v1/superAdmin", superAdminApiV1Router);
-app.use("/api/v1/share", shareApiRouter);
+app.use("/api/v1", shareApiRouter);
 app.use(errorMiddleware);
 
 const Port = 5000;
