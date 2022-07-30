@@ -17,12 +17,12 @@ const UserSchema = new mongoose.Schema({
         type: String, default: 'basic',
         // enum: ["basic", "admin", "superAdmin"]
     }],
-    cars : [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Car'
-        }
-    ],
+    // cars : [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Car'
+    //     }
+    // ],
     credit: {type: Number}, 
     accessToken: {type: String},
     active: {type: Boolean},
