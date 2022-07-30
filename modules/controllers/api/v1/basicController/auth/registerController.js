@@ -44,6 +44,7 @@ export default new(class RegisterController extends InitializeController {
 
             new this.model.Role({
                 role,
+                userRef : newUser._id,
                 permissions : this.helper.basicPermissions
             }).save()
 

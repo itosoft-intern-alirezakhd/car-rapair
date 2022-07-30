@@ -14,11 +14,11 @@ export default new (class VerifyController extends InitializeController{
             const rightOtpFind = optHolder;
             const validUser = await bcrypt.compare(req.body.otp, rightOtpFind.otp)
             if (rightOtpFind.number === req.body.number && validUser) {
-                let superAdmin = await this.model.User.findOne({
+                let user = await this.model.User.findOne({
                     mobile: rightOtpFind.number
                 });
-                if (!superAdmin) {
-                    return this.abort(res, 400  , null , "superAdmin account doest exist , please signUp")
+                if (!user) {
+                    return this.abort(res, 400  , null , "this account doest not exist , please signUp")
                     // const otp = jwt.sign({
                     //     userId: rightOtpFind._id
                     // }, process.env.JWT_SECRET, {
@@ -35,17 +35,20 @@ export default new (class VerifyController extends InitializeController{
                 } else {
                     // if (!user.active) return this.abort(res , 403 , null ,'User not activated' ) 
                     const accessToken = jwt.sign({
-                        userId: superAdmin._id
+                        userId: user._id
                     }, process.env.JWT_SECRET, {
                         expiresIn: 36000
                     });
-                    await this.model.User.findByIdAndUpdate(superAdmin._id, {accessToken: accessToken , active : true})
+                    await this.model.User.findByIdAndUpdate(user._id, {accessToken: accessToken , active : true})
+                    console.log(user);
                     const roles = await this.model.Role.find({
-                        userRef : superAdmin._id
+                        userRef : user._id
                     })
                     await this.model.Otp.deleteMany({
                         number: rightOtpFind.number
                     })
+                    console.log(roles);
+
                     const data = {
                         status: true,
                         register: true,
@@ -53,12 +56,14 @@ export default new (class VerifyController extends InitializeController{
                         data: accessToken,
                         exp: jwt.decode(accessToken).exp,
                         profile: {
-                            name: superAdmin.name,
-                            email: superAdmin.email
+                            name: user.name,
+                            email: user.email
                         },
-                        permissions: roles.map((r)=> r.permissions),
+                        permissions: (roles.map((r)=> r.permissions )),
                     }
-                    return this.ok(res,  200 , null , data)
+                    console.log("AFDEGF");
+                    console.log(data);
+                    return this.helper.response(res,  "verify Otp successfully", null ,200 , data)
                 }
             } else return this.abort(res , 400 , null , "You use an Expired OTP!") 
         } catch (error) {
