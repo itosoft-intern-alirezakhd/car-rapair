@@ -7,8 +7,6 @@ export default new (class CreateController extends InitializeController{
     async createCar  (req, res, next)  {
         try {
             const {name,logo="logo" , model , tip, brand , type} = req.body;
-            if(!name  || !model || !tip || !brand || !type)
-                return this.abort(res , 400 , null , "field can not be empty!" )
             const userId = req.user._id;
             const myCar = this.model.UserCar({
                 name,
