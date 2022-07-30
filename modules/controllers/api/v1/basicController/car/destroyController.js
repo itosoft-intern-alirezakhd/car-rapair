@@ -8,7 +8,8 @@ export default new (class DestroyController extends InitializeController{
         try {
             const carId = req.body.carId;
             const car = await this.model.UserCar.findOne({
-                _id: carId
+                _id: carId , 
+                userId  : req.user._id
             })
             if(!car) return this.abort(res , 404 , null , "car not found")
             const result = await this.model.UserCar.findByIdAndDelete(carId)

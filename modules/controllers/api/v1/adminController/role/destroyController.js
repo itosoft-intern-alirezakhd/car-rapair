@@ -19,7 +19,7 @@ export default new (class destroyController extends InitializeController{
             this.helper.response(res, null , null , 200 ,{
                 success: true,
                 message: 'Role has been deleted'
-            } )
+            })
             
             // getGrants();
         } catch (error) {

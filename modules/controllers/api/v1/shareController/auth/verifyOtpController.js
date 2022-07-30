@@ -1,4 +1,4 @@
-import InitializeController from '../../superAdminController/auth/initializeController.js'
+import InitializeController from '../../adminController/auth/initializeController.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 

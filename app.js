@@ -10,7 +10,6 @@ const app = express();
 const swaggerDocument = require('./swagger.json');
 //import router
 import basicApiV1Router from "./modules/routes/api/basic/api-v1.js"
-import superAdminApiV1Router from './modules/routes/api/superAdmin/api-v1.js'
 import adminApiRouter from './modules/routes/api/admin/api-v1.js'
 import shareApiRouter from './modules/routes/api/share/api-v1.js'
 //import middleware 
@@ -38,23 +37,22 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(checkAuthMiddleware);
-app.get('/g' , async(req , res , next)=> {
-	const car = new Car({
-		faName : "پژوپارس",
-		enName : "samand",
-		logo : "logo" ,
-		models : ["89" , "90" , "91" ],
-		types : ["saloon" ],
-		tips : [ "LX"  , "ELX"],
-		description : "good car",
-		brand : "iranKhodro"
-	})
-	await car.save();
-	next()
-})
+// app.get('/g' , async(req , res , next)=> {
+// 	const car = new Car({
+// 		faName : "پژوپارس",
+// 		enName : "samand",
+// 		logo : "logo" ,
+// 		models : ["89" , "90" , "91" ],
+// 		types : ["saloon" ],
+// 		tips : [ "LX"  , "ELX"],
+// 		description : "good car",
+// 		brand : "iranKhodro"
+// 	})
+// 	await car.save();
+// 	next()
+// })
 app.use("/api/v1/basic", basicApiV1Router);
 app.use("/api/v1/admin", adminApiRouter);
-app.use("/api/v1/superAdmin", superAdminApiV1Router);
 app.use("/api/v1", shareApiRouter);
 
 app.use(errorMiddleware);

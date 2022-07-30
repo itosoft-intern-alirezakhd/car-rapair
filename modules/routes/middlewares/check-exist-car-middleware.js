@@ -23,8 +23,6 @@ export default (state) => {
             brand : brand 
         })
         if (!car) return res.status(404).json({message : "this car does not exist "}) 
-        
-     
         next();
     }
 

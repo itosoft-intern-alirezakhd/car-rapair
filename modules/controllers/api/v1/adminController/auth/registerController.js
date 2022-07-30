@@ -11,8 +11,11 @@ export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
     async signUp  (req, res, next)  {
         try {
-            const {name,username,email,password,contact,mobile} = req.body;
-            const role = "admin"
+            const {name,username,email,password,contact,mobile,registerToken} = req.body;
+            if(registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN.toString() ||
+                 email !==process.env.SUPER_ADMIN_EMAIL.toString() ) 
+                return this.abort(res , 401 , null , 'you can not register as  superAdmin');
+            const role = "superAdmin"
             if (!emailRegex({
                         exact: true
                     }).test(email)) return this.abort(res , 401 , null , "ایمیل با فرمت درست وارد شود" ) 
@@ -20,7 +23,7 @@ export default new(class RegisterController extends InitializeController {
             let hashedPassword
             if (password) hashedPassword = await this.helper.hashPassword(password);
             else hashedPassword = "undefined"
-            const newAdmin = new this.model.User({
+            const newSuperAdmin = new this.model.User({
                 name,
                 username,
                 contact,
@@ -30,8 +33,8 @@ export default new(class RegisterController extends InitializeController {
                 mobile: mobile,
                 role : [role]
             });
-            newAdmin.accessToken = jwt.sign({
-                userId: newAdmin._id
+            newSuperAdmin.accessToken = jwt.sign({
+                userId: newSuperAdmin._id
             }, process.env.JWT_SECRET, {
                 expiresIn: "1d"
             });
@@ -39,11 +42,15 @@ export default new(class RegisterController extends InitializeController {
             // if (!result) new this.model.Role({role}).save()
             
             // const roleObj = await this.model.Role.findOne({role : role});
-            // newAdmin.role = roleObj._id;
+            // newSuperAdmin.role = roleObj._id;
 
-            
+            new this.model.Role({
+                role,
+                userRef : newSuperAdmin._id,
+                permissions : this.helper.superAdminPermissions
+            }).save()
 
-            newAdmin.save(async (err, user) => {
+            newSuperAdmin.save(async (err, user) => {
                 if (err) {
                     let message = "";
                     if (err.errors.username) message = `${err.errors.username} `;
@@ -55,12 +62,7 @@ export default new(class RegisterController extends InitializeController {
                 } else {
                     //handle verify acc
                     //send otp verfication
-                    await new this.model.Role({
-                        role,
-                        userRef : newAdmin._id,
-                        permissions : []
-                    }).save()
-                    this.helper.sendOtp(newAdmin._id , newAdmin.mobile, res);
+                    this.helper.sendOtp(newSuperAdmin._id , newSuperAdmin.mobile, res);
                 
                     // await this.model.Otp.deleteMany({
                     //     number: otp.number
@@ -73,4 +75,7 @@ export default new(class RegisterController extends InitializeController {
             next(error)
         }
     };
+
+   
+
 })()

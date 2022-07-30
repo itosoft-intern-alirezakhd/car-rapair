@@ -17,15 +17,12 @@ import { TYPE_RESOURCE } from "../../../helpers/const.js";
 //Router
 const router = express.Router();
 
-
 //auth 
 const authRouter = express.Router();
 authRouter.post('/signup', registerController.signUp.bind(registerController) );
 authRouter.post('/login', loginController.login.bind(loginController));
 authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
 router.use('/auth' , authRouter);
-
-
 
 //Car
 const carRouter = express.Router();

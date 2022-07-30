@@ -3,6 +3,8 @@ import { InitializeController } from "./initializeController.js";
 
 
 export default new (class readController extends InitializeController{
+    
+    
     async getAll(req, res)  {
         try {
             let {size , page }= {};
@@ -28,7 +30,6 @@ export default new (class readController extends InitializeController{
             this.abort(res , 500 , null , err.message);
         }
     }
-
 
     async getCar(req, res)  {
         try {

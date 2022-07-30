@@ -6,22 +6,22 @@ export default new(class loginController extends InitializeController {
     async login(req, res, next) {
         try {
             let {username,expiresIn,password} = req.body;
-            let admin = await this.model.User.findOne({username});
+            let superAdmin = await this.model.User.findOne({username});
             if (!expiresIn) expiresIn = 36000;
-            if (!admin) return this.abort(res,403,null , 'Username does not exist')
-            if (!admin.active) return this.abort(res,403,null , 'User not activated')
-            const validPassword = await this.helper.validatePassword(password, admin.password);
+            if (!superAdmin) return this.abort(res,403,null , 'Username does not exist')
+            if (!superAdmin.active) return this.abort(res,403,null , 'User not activated')
+            const validPassword = await this.helper.validatePassword(password, superAdmin.password);
             if (!validPassword) return this.abort(res,403,null , 'Password is not correct');
             const accessToken = jwt.sign({
-                userId: admin._id
+                userId: superAdmin._id
             }, process.env.JWT_SECRET, {
                 expiresIn: expiresIn
             });
-            await this.model.User.findByIdAndUpdate(admin._id, {
+            await this.model.User.findByIdAndUpdate(superAdmin._id, {
                 accessToken: accessToken
             })
             const roles = await this.model.Role.find({
-                userRef : admin._id
+                userRef : superAdmin._id
             })
             const data = {
                 status: 200,
@@ -29,10 +29,10 @@ export default new(class loginController extends InitializeController {
                 data: accessToken,
                 exp: jwt.decode(accessToken).exp,
                 profile: {
-                    name: admin.name,
-                    email: admin.email
+                    name: superAdmin.name,
+                    email: superAdmin.email
                 },
-                permissions: roles.map((r)=> r.permissions),
+                permissions:  roles.map((r)=> r.permissions),
             }
             return this.helper.response(res , null , null , 200 , data )
         } catch (error) {
