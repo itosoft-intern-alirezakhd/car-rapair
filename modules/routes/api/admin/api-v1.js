@@ -11,10 +11,16 @@ import updateUserController from "../../../controllers/api/v1/adminController/us
 import readRoleController from '../../../controllers/api/v1/adminController/role/readController.js'
 import destroyRoleController from '../../../controllers/api/v1/adminController/role/destroyController.js'
 import distinctRoleController from '../../../controllers/api/v1/adminController/role/distinctController.js'
+//car
+import  createCarController from '../../../controllers/api/v1/adminController/car/createController.js'
+import  readCarController from '../../../controllers/api/v1/adminController/car/readController.js'
+import  destroyCarController from '../../../controllers/api/v1/adminController/car/destroyController.js'
+import  updateCarController from '../../../controllers/api/v1/adminController/car/updateController.js'
 //middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
+import checkExistCar from '../../middlewares/check-exist-car-middleware.js'
 
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
@@ -44,5 +50,17 @@ roleRouter.get('/getRole/:roleId', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOUR
 roleRouter.delete('/delete', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.ROLE), destroyRoleController.deleteRole.bind(destroyRoleController));
 roleRouter.get('/distinct', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), distinctRoleController.distinct.bind(distinctRoleController));
 router.use('/roles',allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
+
+//Car
+const carRouter = express.Router();
+carRouter.post('/create',checkExistCar("create"),createCarController.createCar.bind(createCarController))
+carRouter.post('/getAll', readCarController.getAll.bind(readCarController))
+carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
+carRouter.put('/update', checkExistCar("update") , updateCarController.updateCar.bind(updateCarController))
+carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
+router.use('/cars' , allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
+
+
+
 
 export default router
