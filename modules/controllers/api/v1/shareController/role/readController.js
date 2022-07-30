@@ -4,15 +4,14 @@ export default new (class ReadController extends InitializeController{
 
 
     async getRoles  (req, res, next)  {
-        let pg , sz ;
+        let {size , page }= {};
         if(!req.body.page || !req.body.size ) {
-            pg = 1;
-            sz = 2;
-        }    
-        let {page , size } = this.helper.Pagination(req.body);
-        pg = page; 
-        size = sz;
-        const roles = await this.model.Role.find({}).skip(pg*sz).limit(Number.parseInt(sz));
+            size = 2;
+            page = 0;
+        }else {
+            {size , page }   this.helper.Pagination(req.body);
+        }   
+        const roles = await this.model.Role.find({}).skip(page*size).limit(Number.parseInt(size));
         return this.helper.response(res , null , null , 200 , roles)
     };
 

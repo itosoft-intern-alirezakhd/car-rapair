@@ -4,21 +4,22 @@ import { InitializeController } from "./initializeController.js";
 export default new (class ReadController extends InitializeController {
 
     async getUsers  (req, res, next) {
-
-        try {
-            const {
-                size,
-                page
-            } = this.helper.Pagination(req.body);
+        try{
+            let {size , page }= {};
+            if(!req.body.page || !req.body.size ) {
+                size = 2;
+                page = 0;
+            }else {
+                {size , page }   this.helper.Pagination(req.body);
+            }   
             const sort = req.body.sort;
             const filter = req.body;
             delete filter.page;
             delete filter.size;
             delete filter.sort;
             let results ;
-
-            if(!size  || !page) results = await this.model.User.find()
-            else results = await this.model.User.find().skip(size * page).limit(Number.parseInt(size))
+            
+            results = await this.model.User.find().skip(size * page).limit(Number.parseInt(size))
             let users = [];
                 for (let result of results) {
                     users.push({

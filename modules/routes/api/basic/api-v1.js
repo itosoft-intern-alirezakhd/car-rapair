@@ -31,6 +31,7 @@ router.use('/auth' , authRouter);
 const carRouter = express.Router();
 carRouter.post('/create',createCarController.createCar.bind(createCarController))
 carRouter.post('/getAll', readCarController.getAll.bind(readCarController))
+carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
 carRouter.put('/update', updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
 router.use('/cars' , allowLoggedIn , carRouter);
