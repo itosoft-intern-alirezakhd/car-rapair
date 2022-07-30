@@ -2,14 +2,14 @@ import express from 'express';
 //auth
 import registerController from '../../../controllers/api/v1/superAdminController/auth/registerController.js'
 import loginController from '../../../controllers/api/v1/superAdminController/auth/loginController.js'
+//role
+import createRoleController from '../../../controllers/api/v1/superAdminController/role/createController.js'
+import destroyRoleController from '../../../controllers/api/v1/superAdminController/role/destroyController.js'
 // //user
 // import createUserController from "../../../controllers/api/v1/superAdminController/user/createController.js";
 // import readUserController from "../../../controllers/api/v1/superAdminController/user/readController.js";
 // import destroyUserController from "../../../controllers/api/v1/superAdminController/user/destroyController.js";
 // import updateUserController from "../../../controllers/api/v1/superAdminController/user/updateController.js";
-// //role
-import createRoleController from '../../../controllers/api/v1/superAdminController/role/createController.js'
-import destroyRoleController from '../../../controllers/api/v1/superAdminController/role/destroyController.js'
 //middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'

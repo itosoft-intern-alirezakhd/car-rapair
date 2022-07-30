@@ -1,11 +1,7 @@
 import express from "express"
 //auth 
 import  registerController from '../../../controllers/api/v1/basicController/auth/registerController.js'
-import whoController from '../../../controllers/api/v1/shareController/whoController.js'
 import loginController from '../../../controllers/api/v1/basicController/auth/loginController.js'
-//profile
-import readProfileController from "../../../controllers/api/v1/shareController/profile/readController.js";
-import updateProfileController from "../../../controllers/api/v1/shareController/profile/updateController.js";
 //car
 import  carController from '../../../controllers/api/v1/basicController/car/carController.js'
 //import middleware

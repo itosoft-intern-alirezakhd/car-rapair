@@ -26,14 +26,8 @@ import { TYPE_RESOURCE } from "../../../helpers/const.js";
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
 const router = express.Router();
 
-router.get('/whoAmI', allowLoggedIn, whoController.whoAmI.bind(whoController));
-
-//profile
-const profileRouter = express.Router();
-profileRouter.get('/', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), readProfileController.getProfile.bind(readProfileController));
-profileRouter.put('/update', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), updateProfileController.updateProfile.bind(updateProfileController));
-router.use('/profile' , profileRouter);
-
+//auth
+const authRouter = express.Router();
 authRouter.post('/verifyOTP', verifyOtpController.verifyOTP.bind(verifyOtpController));
 router.use('/auth' , authRouter);
 
@@ -54,7 +48,13 @@ roleRouter.delete('/delete', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.R
 roleRouter.get('/distinct', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), distinctRoleController.distinct.bind(distinctRoleController));
 router.use('/roles',allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
 
+//who
+router.get('/whoAmI', allowLoggedIn, whoController.whoAmI.bind(whoController));
 
-
+//profile
+const profileRouter = express.Router();
+profileRouter.get('/', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), readProfileController.getProfile.bind(readProfileController));
+profileRouter.put('/update', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), updateProfileController.updateProfile.bind(updateProfileController));
+router.use('/profile' , profileRouter);
 
 export default router

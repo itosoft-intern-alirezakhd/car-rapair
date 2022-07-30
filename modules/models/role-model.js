@@ -2,7 +2,6 @@
 import mongoose from "mongoose";
 // const uniqueValidator = require('mongoose-unique-validator');
 import uniqueValidator from 'mongoose-unique-validator'
-import User from "./user-model.js";
 
 
 const RoleSchema = new mongoose.Schema({
