@@ -1,4 +1,4 @@
-import {InitializeController} from '../../basicController/car/initializeController.js'
+import {InitializeController} from '../../userController/car/initializeController.js'
 
 export default new (class TypeController extends InitializeController {
 

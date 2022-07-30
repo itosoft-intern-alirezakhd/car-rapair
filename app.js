@@ -9,7 +9,7 @@ import {DATABASE_URL} from './modules/helpers/const.js'
 const app = express();
 const swaggerDocument = require('./swagger.json');
 //import router
-import basicApiV1Router from "./modules/routes/api/basic/api-v1.js"
+import userApiV1Router from "./modules/routes/api/user/api-v1.js"
 import adminApiRouter from './modules/routes/api/admin/api-v1.js'
 import shareApiRouter from './modules/routes/api/share/api-v1.js'
 //import middleware 
@@ -51,7 +51,7 @@ app.use(checkAuthMiddleware);
 // 	await car.save();
 // 	next()
 // })
-app.use("/api/v1/basic", basicApiV1Router);
+app.use("/api/v1/basic", userApiV1Router);
 app.use("/api/v1/admin", adminApiRouter);
 app.use("/api/v1", shareApiRouter);
 

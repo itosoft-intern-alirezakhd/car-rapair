@@ -23,7 +23,7 @@ const router = express.Router();
 
 //auth 
 const authRouter = express.Router();
-authRouter.post('/signup', registerController.signUp.bind(registerController) );
+authRouter.post('/signup',registerController.signUp.bind(registerController) );
 authRouter.post('/login', loginController.login.bind(loginController));
 authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
 router.use('/auth' , authRouter);

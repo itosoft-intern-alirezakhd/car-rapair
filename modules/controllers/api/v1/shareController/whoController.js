@@ -1,4 +1,4 @@
-import  InitializeController  from "../basicController/auth/initializeController.js"
+import  InitializeController  from "../userController/auth/initializeController.js"
 
 export default new(class WhoController extends InitializeController {
 

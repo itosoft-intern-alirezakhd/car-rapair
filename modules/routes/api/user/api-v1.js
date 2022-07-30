@@ -1,12 +1,12 @@
 import express from "express"
 //auth 
-import  registerController from '../../../controllers/api/v1/basicController/auth/registerController.js'
-import loginController from '../../../controllers/api/v1/basicController/auth/loginController.js'
+import  registerController from '../../../controllers/api/v1/userController/auth/registerController.js'
+import loginController from '../../../controllers/api/v1/userController/auth/loginController.js'
 //car
-import  createCarController from '../../../controllers/api/v1/basicController/car/createController.js'
-import  readCarController from '../../../controllers/api/v1/basicController/car/readController.js'
-import  destroyCarController from '../../../controllers/api/v1/basicController/car/destroyController.js'
-import  updateCarController from '../../../controllers/api/v1/basicController/car/updateController.js'
+import  createCarController from '../../../controllers/api/v1/userController/car/createController.js'
+import  readCarController from '../../../controllers/api/v1/userController/car/readController.js'
+import  destroyCarController from '../../../controllers/api/v1/userController/car/destroyController.js'
+import  updateCarController from '../../../controllers/api/v1/userController/car/updateController.js'
 //import middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'

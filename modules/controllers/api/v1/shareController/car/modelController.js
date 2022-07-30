@@ -1,5 +1,5 @@
 import { next } from 'cheerio/lib/api/traversing.js'
-import {InitializeController} from '../../basicController/car/initializeController.js'
+import {InitializeController} from '../../userController/car/initializeController.js'
 
 export default new (class  extends InitializeController {
 
