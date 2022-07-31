@@ -19,8 +19,8 @@ export default new (class readController extends InitializeController{
             // delete filter.size;
             // delete filter.sort;
 
-            const cars = await this.model.UserCar.find().skip(size * page).limit(Number.parseInt(size))
-            const count = await this.model.UserCar.countDocuments();
+            const cars = await this.model.Car.find().skip(size * page).limit(Number.parseInt(size))
+            const count = await this.model.Car.countDocuments();
             this.helper.response(res ,"finding car successfully" , null , 200 ,  {
                 count,
                 cars: cars

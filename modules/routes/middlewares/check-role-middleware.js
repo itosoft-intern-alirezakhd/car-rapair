@@ -26,8 +26,6 @@ export default  (roles) => {
             }
 
             if (roles.length > 1) {
-                console.log("VSFB");
-                console.log(roles[0] + " " + roles[1] + " " + role);
                 if (roles[0] === role.role || roles[1] === role.role)
                     next()
                 else return res.status(401).json({

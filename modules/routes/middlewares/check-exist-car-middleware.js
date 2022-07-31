@@ -22,7 +22,8 @@ export default (state) => {
             tips : tip ,
             brand : brand 
         })
-        if (!car) return res.status(404).json({message : "this car does not exist "}) 
+        if (!car && state==="update") return res.status(404).json({message : "this car does not exist "}) 
+        if (!car && state==="create") return res.status(404).json({message : "this car has already exist "}) 
         next();
     }
 

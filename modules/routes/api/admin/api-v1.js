@@ -53,10 +53,10 @@ router.use('/roles',allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"]
 
 //Car
 const carRouter = express.Router();
-carRouter.post('/create',checkExistCar("create"),createCarController.createCar.bind(createCarController))
+carRouter.post('/create',createCarController.createCar.bind(createCarController))
 carRouter.post('/getAll', readCarController.getAll.bind(readCarController))
 carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
-carRouter.put('/update', checkExistCar("update") , updateCarController.updateCar.bind(updateCarController))
+carRouter.put('/update' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
 router.use('/cars' , allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
 

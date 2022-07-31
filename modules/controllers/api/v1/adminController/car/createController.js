@@ -6,9 +6,10 @@ export default new (class CreateController extends InitializeController{
 
     async createCar  (req, res, next)  {
         try {
-            const {name,logo="logo" , models , tips, brand , types} = req.body;
+            const {faName , enName ,logo="logo" , models , tips, brand , types} = req.body;
             const car = this.model.Car({
-                name,
+                faName,
+                enName,
                 logo,
                 models,
                 types,
