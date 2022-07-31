@@ -1,12 +1,6 @@
 import emailRegex from 'email-regex'
 import InitializeController from './initializeController.js';
 import jwt from 'jsonwebtoken'
-import otpGenerator from 'otp-generator';
-import Otp from '../../../../../models/otp-model.js';
-import bcrypt from 'bcrypt'
-import {
-    data
-} from 'cheerio/lib/api/attributes.js';
 
 
 export default new(class RegisterController extends InitializeController {

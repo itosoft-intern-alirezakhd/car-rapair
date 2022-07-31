@@ -8,6 +8,7 @@ export default async (req, res, next) => {
 		let accessToken = req.headers["authorization"].match(re)
 		if (accessToken === null) return res.status(401).json({error: 'Please enter a valid format for token'})
 		jwt.verify(accessToken[1], process.env.JWT_SECRET, async (err, decoded) => {
+			
 			if (err && err.message) return res.status(401).json({error: `${err.message}, please login to obtain a new one`});
 			// const user = await User.findById(decoded.userId);
 			// if (user.accessToken !== accessToken) return res.status(401).json({error: `jwt expired, please login to obtain a new one`});

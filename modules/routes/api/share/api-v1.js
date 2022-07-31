@@ -1,6 +1,8 @@
 import express from 'express';
 //auth
 import verifyOtpController from "../../../controllers/api/v1/shareController/auth/verifyOtpController.js";
+import logoutController from '../../../controllers/api/v1/shareController/auth/logoutController.js';
+
 //who
 import whoController from '../../../controllers/api/v1/shareController/whoController.js';
 //profile 
@@ -10,6 +12,7 @@ import updateProfileController from '../../../controllers/api/v1/shareController
 import typeCarController from '../../../controllers/api/v1/shareController/car/TypeController.js'
 import modelCarController from '../../../controllers/api/v1/shareController/car/modelController.js'
 import tipCarController from '../../../controllers/api/v1/shareController/car/tipController.js'
+
 
 //middleware
 import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
@@ -23,6 +26,7 @@ const router = express.Router();
 //auth
 const authRouter = express.Router();
 authRouter.post('/verifyOTP', verifyOtpController.verifyOTP.bind(verifyOtpController));
+authRouter.post('/logout',allowLoggedIn , logoutController.logout.bind(logoutController));
 router.use('/auth' , authRouter);
 
 //who
