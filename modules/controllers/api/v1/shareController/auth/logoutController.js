@@ -5,7 +5,6 @@ export default new(class LogOutController extends InitializeController {
 
     async logout(req, res, next) {
         try {
-
             if (req.user) {
                 const userId = req.user._id;
                 const user = await this.model.User.findById(userId);

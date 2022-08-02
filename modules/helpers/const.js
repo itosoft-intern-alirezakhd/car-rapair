@@ -27,7 +27,7 @@ export const configToken = {
         SecretKey: "123456789"
     }
 };
-export const  DATABASE_URL = "mongodb+srv://alirezakoohzad:alireza894@cluster0.k8p9o.mongodb.net/carRepair?retryWrites=true&w=majority"
+export const  DATABASE_URL = "mongodb+srv://14@$^@$&*$^364@cluster0.k8p9o.mongodb.net/carRepair?retryWrites=true&w=majority"
 
 
 
