@@ -14,8 +14,8 @@ import adminApiRouter from './modules/routes/api/admin/api-v1.js'
 import shareApiRouter from './modules/routes/api/share/api-v1.js'
 //import middleware 
 import checkAuthMiddleware from "./modules/routes/middlewares/check-auth-middleware.js";
-import allowCrossDomain from "./modules/routes/middlewares/set-header-middleware.js";
-import errorMiddleware from "./modules/routes/middlewares/error-middleware.js";
+import allowCrossDomain from "./modules/routes/middlewares/share/set-header-middleware.js";
+import errorMiddleware from "./modules/routes/middlewares/share/error-middleware.js";
 import Car from "./modules/models/car-model.js";
 
 mongoose.connect(DATABASE_URL, {

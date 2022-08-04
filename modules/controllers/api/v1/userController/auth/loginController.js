@@ -1,8 +1,5 @@
-import otpGenerator from 'otp-generator'
-import Otp from '../../../../../models/otp-model.js';
 import InitializeController from './initializeController.js'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
+import {validationResult} from 'express-validator'
 
 export default new(class loginController extends InitializeController {
 
@@ -14,8 +11,10 @@ export default new(class loginController extends InitializeController {
                 password
             } = req.body;
             //check validation
-            this.helper.checkValidationErr(req , res);
-
+            let errors  = validationResult(req);
+            if(!errors.isEmpty()){
+                return this.showValidationErrors(res , errors.array())
+            }
             let user = await this.model.User.findOne({
                 email
             });

@@ -15,7 +15,7 @@ import tipCarController from '../../../controllers/api/v1/shareController/car/ti
 
 
 //middleware
-import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
+import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";

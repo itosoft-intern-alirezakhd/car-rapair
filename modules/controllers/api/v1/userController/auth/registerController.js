@@ -1,23 +1,29 @@
-import emailRegex from 'email-regex'
-import InitializeController from './initializeController.js'; 
-import jwt from 'jsonwebtoken'
-import otpGenerator from 'otp-generator';
-import Otp from '../../../../../models/otp-model.js';
-import bcrypt from 'bcrypt'
-import { data } from 'cheerio/lib/api/attributes.js';
-
+import InitializeController from './initializeController.js';
+import {validationResult} from 'express-validator'
 
 export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
-    async signUp  (req, res, next)  {
+    async signUp(req, res, next) {
         try {
-            const {name,username,email,password,contact,mobile} = req.body;
+            const {
+                name,
+                username,
+                email,
+                password,
+                contact,
+                mobile
+            } = req.body;
             //check validation
-            this.helper.checkValidationErr(req , res);
+            let errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return this.showValidationErrors(res, errors.array())
+            }
             const role = "user";
             //check existing user
-            let user = await this.model.User.findOne({email});
-            if(user) return this.abort(res , 422 ,null , "email has already exist" )
+            let user = await this.model.User.findOne({
+                email
+            });
+            if (user) return this.abort(res, 422, null, "email has already exist")
             //password hashing
             let hashedPassword = await this.helper.hashPassword(password);
             //create user
@@ -29,19 +35,19 @@ export default new(class RegisterController extends InitializeController {
                 password: hashedPassword,
                 active: false,
                 mobile: mobile,
-                role : [role]
+                role: [role]
             });
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
-            
+
             // const roleObj = await this.model.Role.findOne({role : role});
             // newUser.role = roleObj._id;
 
             //create role
             new this.model.Role({
                 role,
-                userRef : newUser._id,
-                permissions : this.helper.basicPermissions
+                userRef: newUser._id,
+                permissions: this.helper.basicPermissions
             }).save()
 
             //saving user

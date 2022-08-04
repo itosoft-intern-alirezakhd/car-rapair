@@ -10,7 +10,6 @@ import Role from '../../../../../models/role-model.js'
 import Otp from '../../../../../models/otp-model.js'
 import { basicPermissions } from '../../../../../helpers/permissions.js' 
 import transform from '../../../../../helpers/transform.js'
-import checkValidationErr from '../../../../../helpers/checkValidationErr.js'
 const itemTransform = ["._id", ".name", ".username", ".email", ".role" , ".profile" , ".permissions" ];
 
 
@@ -18,7 +17,7 @@ export default class InitializeController extends Controller{
     constructor(){
         super();
         (this.model = {User,Otp , Role}) , 
-        (this.helper = {checkValidationErr ,  transform , itemTransform , basicPermissions ,  response , axios , validatePassword , hashPassword , otpGenerate , sendOtp  ,configVerify , configToken })
+        (this.helper = {transform , itemTransform , basicPermissions ,  response , axios , validatePassword , hashPassword , otpGenerate , sendOtp  ,configVerify , configToken })
     }
 }
 

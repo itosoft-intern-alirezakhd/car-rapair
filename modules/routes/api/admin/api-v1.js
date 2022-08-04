@@ -17,7 +17,7 @@ import  readCarController from '../../../controllers/api/v1/adminController/car/
 import  destroyCarController from '../../../controllers/api/v1/adminController/car/destroyController.js'
 import  updateCarController from '../../../controllers/api/v1/adminController/car/updateController.js'
 //middleware
-import allowLoggedIn from '../../middlewares/allow-loggedIn-middleware.js'
+import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/grant-access-middleware.js'
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
 import checkExistCar from '../../middlewares/check-exist-car-middleware.js'

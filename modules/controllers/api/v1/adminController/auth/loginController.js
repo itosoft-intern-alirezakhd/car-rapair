@@ -1,8 +1,6 @@
 import InitializeController from './initializeController.js'
-import jwt from 'jsonwebtoken'
-import {
-    validationResult
-} from 'express-validator'
+import {validationResult} from 'express-validator'
+
 export default new(class loginController extends InitializeController {
 
     async login(req, res, next) {
@@ -12,7 +10,10 @@ export default new(class loginController extends InitializeController {
                 expiresIn,
                 password
             } = req.body;
-            this.helper.checkValidationErr(req , res);
+            let errors  = validationResult(req);
+            if(!errors.isEmpty()){
+                return this.showValidationErrors(res , errors.array())
+            }
             let admin = await this.model.User.findOne({
                 email
             });

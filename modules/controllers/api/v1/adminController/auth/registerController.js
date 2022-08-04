@@ -1,9 +1,5 @@
-import emailRegex from 'email-regex'
 import InitializeController from './initializeController.js';
-import jwt from 'jsonwebtoken'
-import {
-    validationResult
-} from 'express-validator'
+import {validationResult} from 'express-validator'
 
 export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
@@ -20,9 +16,12 @@ export default new(class RegisterController extends InitializeController {
                 role
             } = req.body;
             //check validation
-            this.helper.checkValidationErr(req , res);
+            let errors  = validationResult(req);
+            if(!errors.isEmpty()){
+                return this.showValidationErrors(res , errors.array())
+            }
             
-            if (registerToken && role === "superAdmin") {
+            if (role === "superAdmin") {
                 if (registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN.toString() ||
                     email !== process.env.SUPER_ADMIN_EMAIL.toString())
                     return this.abort(res, 401, null, 'you can not register as  superAdmin');
