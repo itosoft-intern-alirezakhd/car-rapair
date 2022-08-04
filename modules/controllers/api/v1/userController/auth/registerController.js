@@ -12,14 +12,15 @@ export default new(class RegisterController extends InitializeController {
     async signUp  (req, res, next)  {
         try {
             const {name,username,email,password,contact,mobile} = req.body;
+            //check validation
+            this.helper.checkValidationErr(req , res);
             const role = "user";
-            if (!emailRegex({
-                        exact: true
-                    }).test(email)) return this.abort(res , 401 , null , "ایمیل با فرمت درست وارد شود" ) 
-
-            let hashedPassword
-            if (password) hashedPassword = await this.helper.hashPassword(password);
-            else hashedPassword = "undefined"
+            //check existing user
+            let user = await this.model.User.findOne({email});
+            if(user) return this.abort(res , 422 ,null , "email has already exist" )
+            //password hashing
+            let hashedPassword = await this.helper.hashPassword(password);
+            //create user
             const newUser = new this.model.User({
                 name,
                 username,
@@ -30,24 +31,20 @@ export default new(class RegisterController extends InitializeController {
                 mobile: mobile,
                 role : [role]
             });
-
-            newUser.accessToken = jwt.sign({
-                userId: newUser._id
-            }, process.env.JWT_SECRET, {
-                expiresIn: "1d"
-            });
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
             
             // const roleObj = await this.model.Role.findOne({role : role});
             // newUser.role = roleObj._id;
 
+            //create role
             new this.model.Role({
                 role,
                 userRef : newUser._id,
                 permissions : this.helper.basicPermissions
             }).save()
 
+            //saving user
             newUser.save(async (err, user) => {
                 if (err) {
                     let message = "";
@@ -65,10 +62,6 @@ export default new(class RegisterController extends InitializeController {
                     //handle verify acc
                     //send otp verfication
                     this.helper.sendOtp(newUser._id, newUser.mobile, res);
-                    // await this.model.Otp.deleteMany({
-                    //     number: otp.number
-                    // })
-                    // return this.ok(res , 200 , null , "User registrations is successful.") 
                 }
             });
         } catch (error) {
