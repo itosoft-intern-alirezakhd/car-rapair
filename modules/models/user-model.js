@@ -24,7 +24,6 @@ const UserSchema = new mongoose.Schema({
     //     }
     // ],
     credit: {type: Number}, 
-    accessToken: {type: String},
     active: {type: Boolean},
     address: [
         {
