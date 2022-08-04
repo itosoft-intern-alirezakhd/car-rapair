@@ -1,12 +1,16 @@
 import InitializeController from '../../adminController/auth/initializeController.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-
+import {validationResult} from 'express-validator'
 
 export default new (class VerifyController extends InitializeController{
 
     async verifyOTP(req, res,next) {
         try {
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+                return this.showValidationErrors(res, errors)
+            }
             const optHolder = await this.model.Otp.findOne({
                 number: req.body.number
             });
@@ -19,57 +23,26 @@ export default new (class VerifyController extends InitializeController{
                 });
                 if (!user) {
                     return this.abort(res, 400  , null , "this account doest not exist , please signUp")
-                    // const otp = jwt.sign({
-                    //     userId: rightOtpFind._id
-                    // }, process.env.JWT_SECRET, {
-                    //     expiresIn: 36000
-                    // });
-                    // await this.model.Otp.findByIdAndUpdate(rightOtpFind._id, {otp: otp})
-                    // const data = {
-                    //     status: true,
-                    //     register: false,
-                    //     registerToken: otp,
-                    //     number: rightOtpFind.number
-                    // }
-                    // return this.ok(res , 200 , null , data)
                 } else {
-                    // if (!user.active) return this.abort(res , 403 , null ,'User not activated' ) 
-                    const accessToken = jwt.sign({
-                        userId: user._id
-                    }, process.env.JWT_SECRET, {
-                        expiresIn: 36000
-                    });
-                    await this.model.User.findByIdAndUpdate(user._id, {accessToken: accessToken , active : true})
-                    console.log(user);
+                    await this.model.User.findByIdAndUpdate(user._id, { active : true})
                     const roles = await this.model.Role.find({
                         userRef : user._id
                     })
                     await this.model.Otp.deleteMany({
                         number: rightOtpFind.number
                     })
-                    console.log(roles);
-
-                    const data = {
-                        status: true,
-                        register: true,
-                        family: "SUCCESSFUL",
-                        data: accessToken,
-                        exp: jwt.decode(accessToken).exp,
-                        profile: {
-                            name: user.name,
-                            email: user.email
-                        },
-                        permissions: (roles.map((r)=> r.permissions )),
-                    }
-                    console.log("AFDEGF");
-                    console.log(data);
-                    return this.helper.response(res,  "verify Otp successfully", null ,200 , data)
+                    user.permissions =  (roles.map((r)=> r.permissions ))
+                    const Transform = await this.helper.transform(
+                        user,
+                        this.helper.itemTransform,
+                        false,
+                        user.role[0]
+                    )
+                    return this.helper.response(res,  "verify Otp successfully", null ,200 , Transform)
                 }
             } else return this.abort(res , 400 , null , "You use an Expired OTP!") 
         } catch (error) {
             next(error)
         }
     };
-
-
 })()

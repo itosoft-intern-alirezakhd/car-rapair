@@ -2,11 +2,10 @@ const releasesV = process.env.RELEASES_V;
 
 
 export class Controller {
-  showValidationErrors(req, res) {
-    const errors = req.validationErrors();
-    if (errors) {
-      res.status(422).json({
-        messages: errors.map((error) => ({
+  showValidationErrors(res , errors) {
+    if (errors.array().length > 0) {
+      return res.status(422).json({
+        messages: errors.array().map((error) => ({
           field: error.param,
           message: error.msg,
         })),

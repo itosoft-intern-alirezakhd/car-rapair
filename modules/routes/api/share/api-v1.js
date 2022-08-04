@@ -21,11 +21,17 @@ import grantAccess from '../../middlewares/grant-access-middleware.js'
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
+
+//validation 
+import verifyOTPValidation from '../../../validation/share/verifyOTP-validation.js'
+
 const router = express.Router();
+
+
 
 //auth
 const authRouter = express.Router();
-authRouter.post('/verifyOTP', verifyOtpController.verifyOTP.bind(verifyOtpController));
+authRouter.post('/verifyOTP', verifyOTPValidation , verifyOtpController.verifyOTP.bind(verifyOtpController));
 authRouter.post('/logout',allowLoggedIn , logoutController.logout.bind(logoutController));
 router.use('/auth' , authRouter);
 

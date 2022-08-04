@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from 'mongoose';
+import timestamps from 'mongoose-timestamp';
+import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 const Schema = mongoose.Schema;
-const timestamps = require("mongoose-timestamp");
-const aggregatePaginate = require("mongoose-aggregate-paginate-v2");
 
 const TokenSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: "User" },

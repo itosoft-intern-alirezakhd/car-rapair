@@ -1,9 +1,11 @@
-const expiresInUser = process.env.EXPIRESIN_USER_HOUR;
-const expiresInSuperAdmin = process.env.EXPIRESIN_SUPER_ADMIN_HOUR;
-const config = require("../config");
-const { generateToken } = require(`${config.path.helper}/generateToken`);
-const TokenModel = require(`${config.path.model}/token`);
-module.exports.transform = async (result, item, withPaginate = false, type = null, ip = null, deviceName = null) => {
+
+import TokenModel from '../models/token-model.js'
+import generateToken from '../helpers/generateToken.js'
+
+
+export const transform = async (result, item, withPaginate = false, type = null, ip = null, deviceName = null) => {
+  const expiresInUser = process.env.EXPIRESIN_USER_HOUR;
+  const expiresInSuperAdmin = process.env.EXPIRESIN_SUPER_ADMIN_HOUR;
   if (withPaginate) {
     let items = [];
     if (result.docs.length != 0) {
@@ -65,3 +67,7 @@ module.exports.transform = async (result, item, withPaginate = false, type = nul
     };
   }
 };
+
+
+
+export default transform

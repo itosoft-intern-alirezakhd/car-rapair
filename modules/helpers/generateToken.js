@@ -1,10 +1,12 @@
-const tokenKey = process.env.TOKEN_KEY;
-const tokenIv = process.env.TOKEN_IV;
-const aesjs = require("aes-js");
-const { v4: uuidv4 } = require("uuid");
+import aesjs from 'aes-js'
+import {
+  v4 as uuidv4
+} from 'uuid'
 
-module.exports.generateToken = async () => {
+export default async () => {
   try {
+    const tokenKey = process.env.TOKEN_KEY;
+    const tokenIv = process.env.TOKEN_IV;
     const key = JSON.parse(tokenKey);
     const iv = JSON.parse(tokenIv);
     const textBytes = aesjs.utils.utf8.toBytes(uuidv4());

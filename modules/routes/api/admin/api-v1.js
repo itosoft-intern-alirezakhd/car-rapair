@@ -27,10 +27,14 @@ import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
 const router = express.Router();
 
+//validation
+import registerAdminValidation from '../../../validation/admin/register-validation.js'
+import loginAdminValidation from '../../../validation/admin/login-validation.js'
+
 //auth 
 const authRouter = express.Router();
-authRouter.post('/signup',registerController.signUp.bind(registerController) );
-authRouter.post('/login', loginController.login.bind(loginController));
+authRouter.post('/signup',registerAdminValidation , registerController.signUp.bind(registerController) );
+authRouter.post('/login', loginAdminValidation , loginController.login.bind(loginController));
 authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
 router.use('/auth' , authRouter);
 

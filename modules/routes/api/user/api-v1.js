@@ -2,6 +2,8 @@ import express from "express"
 //auth 
 import  registerController from '../../../controllers/api/v1/userController/auth/registerController.js'
 import loginController from '../../../controllers/api/v1/userController/auth/loginController.js'
+import loginOTPController from '../../../controllers/api/v1/userController/auth/loginOTPController.js'
+
 //car
 import  createCarController from '../../../controllers/api/v1/userController/car/createController.js'
 import  readCarController from '../../../controllers/api/v1/userController/car/readController.js'
@@ -21,7 +23,7 @@ const router = express.Router();
 const authRouter = express.Router();
 authRouter.post('/signup', registerController.signUp.bind(registerController) );
 authRouter.post('/login', loginController.login.bind(loginController));
-authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
+authRouter.post('/loginWithOTP', loginOTPController.loginWithOTP.bind(loginOTPController));
 router.use('/auth' , authRouter)
 
 //Car

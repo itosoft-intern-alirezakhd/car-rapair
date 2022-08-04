@@ -1,7 +1,9 @@
 import emailRegex from 'email-regex'
 import InitializeController from './initializeController.js';
 import jwt from 'jsonwebtoken'
-
+import {
+    validationResult
+} from 'express-validator'
 
 export default new(class RegisterController extends InitializeController {
     //save user => create otp => send otp sms => verify otp => active user
@@ -17,18 +19,23 @@ export default new(class RegisterController extends InitializeController {
                 registerToken,
                 role
             } = req.body;
+            //check validation
+            const errors = validationResult(req);
+            if (!errors.isEmpty()) {
+
+                return this.showValidationErrors(res , errors)
+            }  
+
+
             if (registerToken && role === "superAdmin") {
                 if (registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN.toString() ||
                     email !== process.env.SUPER_ADMIN_EMAIL.toString())
                     return this.abort(res, 401, null, 'you can not register as  superAdmin');
             }
-            if (!emailRegex({
-                    exact: true
-                }).test(email)) return this.abort(res, 401, null, "ایمیل با فرمت درست وارد شود")
 
-            let hashedPassword
-            if (password) hashedPassword = await this.helper.hashPassword(password);
-            else hashedPassword = "undefined"
+            let user = await this.model.User.findOne({email});
+            if(user) return this.abort(res , 422 ,null , "email has already exist" )
+            let hashedPassword = await this.helper.hashPassword(password);
             const newAdmin = new this.model.User({
                 name,
                 username,
@@ -39,11 +46,14 @@ export default new(class RegisterController extends InitializeController {
                 mobile: mobile,
                 role: [role]
             });
-            newAdmin.accessToken = jwt.sign({
-                userId: newAdmin._id
-            }, process.env.JWT_SECRET, {
-                expiresIn: "1d"
-            });
+
+            // newAdmin.accessToken = jwt.sign({
+            //     userId: newAdmin._id
+            // }, process.env.JWT_SECRET, {
+            //     expiresIn: "1d"
+            // });
+            
+            
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
 
@@ -53,7 +63,7 @@ export default new(class RegisterController extends InitializeController {
             new this.model.Role({
                 role,
                 userRef: newAdmin._id,
-                permissions: this.helper.superAdminPermissions
+                permissions: role==="admin" ? this.helper.adminPermissions :  this.helper.superAdminPermissions
             }).save()
 
             newAdmin.save(async (err, user) => {
