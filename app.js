@@ -51,7 +51,7 @@ app.use(checkAuthMiddleware);
 // 	await car.save();
 // 	next()
 // })
-app.use("/api/v1/basic", userApiV1Router);
+app.use("/api/v1/user", userApiV1Router);
 app.use("/api/v1/admin", adminApiRouter);
 app.use("/api/v1", shareApiRouter);
 

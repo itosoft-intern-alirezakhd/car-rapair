@@ -12,7 +12,7 @@ export default new(class RegisterController extends InitializeController {
     async signUp  (req, res, next)  {
         try {
             const {name,username,email,password,contact,mobile} = req.body;
-            const role = "basic";
+            const role = "user";
             if (!emailRegex({
                         exact: true
                     }).test(email)) return this.abort(res , 401 , null , "ایمیل با فرمت درست وارد شود" ) 
