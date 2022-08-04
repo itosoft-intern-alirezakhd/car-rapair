@@ -20,13 +20,8 @@ export default new(class RegisterController extends InitializeController {
                 role
             } = req.body;
             //check validation
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-
-                return this.showValidationErrors(res , errors)
-            }  
-
-
+            this.helper.checkValidationErr(req , res);
+            
             if (registerToken && role === "superAdmin") {
                 if (registerToken !== process.env.REGISTER_SUPER_ADMIN_TOKEN.toString() ||
                     email !== process.env.SUPER_ADMIN_EMAIL.toString())

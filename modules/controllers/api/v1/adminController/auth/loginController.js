@@ -12,10 +12,7 @@ export default new(class loginController extends InitializeController {
                 expiresIn,
                 password
             } = req.body;
-            const errors = validationResult(req);
-            if (!errors.isEmpty()) {
-                return this.showValidationErrors(res, errors)
-            }
+            this.helper.checkValidationErr(req , res);
             let admin = await this.model.User.findOne({
                 email
             });
@@ -34,43 +31,9 @@ export default new(class loginController extends InitializeController {
                 false,
                 admin.role[0]
             )
-            // const accessToken = jwt.sign({
-            //     userId: admin._id
-            // }, process.env.JWT_SECRET, {
-            //     expiresIn: expiresIn
-            // });
-            // await this.model.User.findByIdAndUpdate(admin._id, {
-            //     accessToken: accessToken
-            // })
             return this.helper.response(res, null, null, 200, Transform)
         } catch (error) {
             next(error);
         }
     };
-    async loginWithOTP(req, res, next) {
-        try {
-            let {
-                number,
-                optionalLoginToken
-            } = req.body;
-            const data = await this.helper.otpGenerate(number);
-            const {
-                configToken,
-                configVerify
-            } = this.helper;
-            const response = await this.helper.axios(configToken.method, configToken.url, configToken.headers, configToken.data)
-            console.log(response);
-            configVerify.headers["x-sms-ir-secure-token"] = response.data['TokenKey']
-            const result = await this.helper.axios(configVerify.method, configVerify.url, configVerify.headers, data)
-            console.log(result);
-            await this.model.Otp.deleteMany({
-                number: number
-            })
-            this.ok(res, null, result.data.Message, result.data.IsSuccessful)
-        } catch (error) {
-            next(error)
-        }
-    };
-
-
 })()

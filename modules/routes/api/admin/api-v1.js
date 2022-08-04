@@ -35,7 +35,7 @@ import loginAdminValidation from '../../../validation/admin/login-validation.js'
 const authRouter = express.Router();
 authRouter.post('/signup',registerAdminValidation , registerController.signUp.bind(registerController) );
 authRouter.post('/login', loginAdminValidation , loginController.login.bind(loginController));
-authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
+// authRouter.post('/loginWithOTP', loginController.loginWithOTP.bind(loginController));
 router.use('/auth' , authRouter);
 
 //User

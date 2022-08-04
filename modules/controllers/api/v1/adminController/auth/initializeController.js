@@ -25,6 +25,7 @@ import {
     adminPermissions
 } from '../../../../../helpers/permissions.js'
 import transform from  '../../../../../helpers/transform.js';
+import checkValidationErr from '../../../../../helpers/checkValidationErr.js'
 const itemTransform = ["._id", ".name", ".username", ".email", ".role" , ".profile" , ".permissions" ];
 
 export default class InitializeController extends Controller {
@@ -36,6 +37,7 @@ export default class InitializeController extends Controller {
             Role
         }),
         (this.helper = {
+            checkValidationErr,
             transform, 
             itemTransform,
             superAdminPermissions,
