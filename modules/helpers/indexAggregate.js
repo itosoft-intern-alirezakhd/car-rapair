@@ -1,10 +1,9 @@
-const config = require("../../modules/config");
 
-module.exports.index = async (req, model, queryData, aggregateData, sort) => {
+export const index = async (req, model, queryData, aggregateData, sort) => {
   try {
     // const Model = require(`${config.path.model}/${model}`);
     let limit = 21;
-    const count = await Model.aggregate([
+    const count = await model.aggregate([
       ...queryData,
       { $group: { _id: null, count: { $sum: 1 } } },
       { $project: { _id: 0 } },
@@ -44,7 +43,7 @@ module.exports.index = async (req, model, queryData, aggregateData, sort) => {
     }
     data = [...data, { $limit: limit }, ...aggregateData];
     pagingCounter = (page - 1) * limit + 1;
-    const result = await Model.aggregate(data);
+    const result = await model.aggregate(data);
     const paginateItem = {
       totalDocs,
       totalPages,
@@ -62,3 +61,6 @@ module.exports.index = async (req, model, queryData, aggregateData, sort) => {
     return false;
   }
 };
+
+
+export default index
