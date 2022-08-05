@@ -9,7 +9,10 @@ import singleUserController from "../../../controllers/api/v1/adminController/us
 import destroyUserController from "../../../controllers/api/v1/adminController/user/destroyController.js";
 import updateUserController from "../../../controllers/api/v1/adminController/user/updateController.js";
 //role
-import readRoleController from '../../../controllers/api/v1/adminController/role/readController.js'
+import createRoleController from '../../../controllers/api/v1/adminController/role/createController.js'
+import updateRoleController from '../../../controllers/api/v1/adminController/role/updateController.js'
+import indexRoleController from '../../../controllers/api/v1/adminController/role/indexController.js'
+import singleRoleController from '../../../controllers/api/v1/adminController/role/singleController.js'
 import destroyRoleController from '../../../controllers/api/v1/adminController/role/destroyController.js'
 import distinctRoleController from '../../../controllers/api/v1/adminController/role/distinctController.js'
 //car
@@ -33,7 +36,7 @@ const router = express.Router();
 import registerAdminValidation from '../../../validation/admin/register-validation.js'
 import loginAdminValidation from '../../../validation/admin/login-validation.js'
 import registerUserValidation from '../../../validation/user/register-validation.js';
-
+import roleAdminValidation from '../../../validation/admin/role-validation.js'
 //auth 
 const authRouter = express.Router();
 authRouter.post('/signup',registerAdminValidation , registerController.signUp.bind(registerController) );
@@ -52,11 +55,13 @@ router.use('/users' , isAdmin , checkRoleMiddleware(["superAdmin" , "admin"])  ,
 
 //Role
 const roleRouter = express.Router();
-roleRouter.get('/getAll', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), readRoleController.getRoles.bind(readRoleController));
-roleRouter.get('/getRole/:roleId', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), readRoleController.getRole.bind(readRoleController));
+roleRouter.post('/create' , roleAdminValidation , grantAccess(TYPE_PERMISSION.CREATE , TYPE_RESOURCE.ROLE), createRoleController.addRole.bind(createCarController))
+roleRouter.get('/getAll', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), indexRoleController.index.bind(indexRoleController));
+roleRouter.get('/getRole/:roleId', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), singleRoleController.single.bind(singleRoleController));
 roleRouter.delete('/delete/:roleId', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.ROLE), destroyRoleController.deleteRole.bind(destroyRoleController));
+roleRouter.put('/update/:roleId' , grantAccess(TYPE_PERMISSION.UPDATE , TYPE_RESOURCE.ROLE), updateRoleController.updateRole.bind(updateRoleController))
 roleRouter.get('/distinct', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), distinctRoleController.distinct.bind(distinctRoleController));
-router.use('/roles' , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
+router.use('/roles' , isAdmin , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
 
 //Car
 const carRouter = express.Router();

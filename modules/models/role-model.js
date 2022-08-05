@@ -15,9 +15,6 @@ const RoleSchema = new mongoose.Schema({
     }],
 });
 
-
-
 RoleSchema.plugin(uniqueValidator);
 const Role = mongoose.model('role', RoleSchema);
-// module.exports = Role;
 export default Role

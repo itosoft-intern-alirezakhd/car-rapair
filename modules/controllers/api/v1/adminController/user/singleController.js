@@ -2,7 +2,6 @@ import Role from "../../../../../models/role-model.js";
 import {
     InitializeController
 } from "./initializeController.js";
-const itemTransform = ["._id", ".email", ".name" , ".username" , ".contact" , ".active" , ".role" , ".permissions"];
 
 export default new(class SingleController extends InitializeController {
 
@@ -18,8 +17,7 @@ export default new(class SingleController extends InitializeController {
                 userRef: user._id
             })
             user.permissions = roles.map((r) => r.permissions);
-            const Transform = await this.helper.transform(user, itemTransform);
-            return this.helper.response(res, null, null, 200, Transform);
+            return this.helper.response(res, null, null, 200, user);
         } catch (error) {
             next(error)
         }

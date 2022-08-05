@@ -4,13 +4,12 @@ import {
 
 
 export default [
-    body('role', 'Email should not be empty ')
+    body('role', 'role should not be empty ')
         .notEmpty()
         .trim(),
-    body('permissions', 'permisstions  should not be empty')
+    body('permissions', 'permisstions  should not be empty or should be array')
         .notEmpty()
-        .isArray()
-        .trim(),
+        .isArray(),
     body('userId', 'userId should not be empty')
         .notEmpty()
         .trim()
