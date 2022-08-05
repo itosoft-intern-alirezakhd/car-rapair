@@ -5,7 +5,8 @@ export default new (class updateController extends InitializeController{
 
     async updateRole  (req, res, next) {
         try {
-            const {roleId,role , extend , permissions } = req.body;
+            const {role , extend , permissions } = req.body;
+            let roleId  = req.params.roleId
             let updateRole = {};
             if(role) updateRole.role  = role;
             if(extend) updateRole.extend  = extend;

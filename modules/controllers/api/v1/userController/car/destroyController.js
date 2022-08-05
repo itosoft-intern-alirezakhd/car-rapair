@@ -6,7 +6,7 @@ export default new (class DestroyController extends InitializeController{
     
     async deleteCar (req, res)  {
         try {
-            const carId = req.body.carId;
+            const carId = req.params.carId;
             const car = await this.model.UserCar.findOne({
                 _id: carId , 
                 userId  : req.user._id

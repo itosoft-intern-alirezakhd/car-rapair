@@ -5,8 +5,9 @@ import transform from "../../../helpers/transform.js";
 import { Controller } from "../../../controllers/controller.js";
 const itemTransform = ["._id", ".name", ".username", ".email", ".mobile", ".role"];
 module.exports = async (req, res) => {
+  let controller = new Controller();
+
   try {
-    let controller = new Controller();
     const token = await Token.findOne({ token: req.headers["x-access-token"] }).exec();
     if (!token) return controller.abort(res, 401 , null , "token undefined");
     const user = await User.findById(token.userId).exec();
@@ -29,6 +30,6 @@ module.exports = async (req, res) => {
       return response(res, null, logcode, 200, Transform);
     }
   } catch (err) {
-    return unauthorized(res, logcode);
+    return controller.abort(res, 401 , null  );
   }
 };

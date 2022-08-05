@@ -41,13 +41,6 @@ export default new(class RegisterController extends InitializeController {
                 role: [role]
             });
 
-            // newAdmin.accessToken = jwt.sign({
-            //     userId: newAdmin._id
-            // }, process.env.JWT_SECRET, {
-            //     expiresIn: "1d"
-            // });
-            
-            
             // const result = await this.model.Role.findOne({userRef : newUser._id})
             // if (!result) new this.model.Role({role}).save()
 
@@ -73,11 +66,6 @@ export default new(class RegisterController extends InitializeController {
                     //handle verify acc
                     //send otp verfication
                     this.helper.sendOtp(newAdmin._id, newAdmin.mobile, res);
-
-                    // await this.model.Otp.deleteMany({
-                    //     number: otp.number
-                    // })
-                    // return this.ok(res , 200 , null , "User registrations is successful.") 
                 }
             });
 

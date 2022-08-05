@@ -5,7 +5,8 @@ import { InitializeController } from "./initializeController.js";
 export default new (class UpdateController extends InitializeController{
     async updateCar (req, res) {
         try {
-            const {_id , name,logo="logo" , model , tip, brand , type} = req.body;
+            const {name,logo="logo" , model , tip, brand , type} = req.body;
+            let _id = req.params.carId;
             await this.model.UserCar.findByIdAndUpdate(_id, {
                 name , model  , tip , brand , type
             })

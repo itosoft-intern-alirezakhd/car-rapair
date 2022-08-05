@@ -10,8 +10,7 @@ import  readCarController from '../../../controllers/api/v1/userController/car/r
 import  destroyCarController from '../../../controllers/api/v1/userController/car/destroyController.js'
 import  updateCarController from '../../../controllers/api/v1/userController/car/updateController.js'
 //import middleware
-import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
-import grantAccess from '../../middlewares/grant-access-middleware.js'
+import grantAccess from '../../middlewares/share/grant-access-middleware.js'
 import checkExistCar from '../../middlewares/check-exist-car-middleware.js'
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
@@ -31,8 +30,8 @@ const carRouter = express.Router();
 carRouter.post('/create',checkExistCar("create"),createCarController.createCar.bind(createCarController))
 carRouter.post('/getAll', readCarController.getAll.bind(readCarController))
 carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
-carRouter.put('/update', checkExistCar("update") , updateCarController.updateCar.bind(updateCarController))
-carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
-router.use('/cars' , allowLoggedIn , carRouter);
+carRouter.put('/update/:carId', checkExistCar("update") , updateCarController.updateCar.bind(updateCarController))
+carRouter.delete('/delete/:carId',destroyCarController.deleteCar.bind(destroyCarController))
+router.use('/cars'  , carRouter);
 
 export default router

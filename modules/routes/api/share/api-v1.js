@@ -15,8 +15,8 @@ import tipCarController from '../../../controllers/api/v1/shareController/car/ti
 
 
 //middleware
-import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
-import grantAccess from '../../middlewares/grant-access-middleware.js'
+// import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
+import grantAccess from '../../middlewares/share/grant-access-middleware.js'
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
@@ -32,16 +32,16 @@ const router = express.Router();
 //auth
 const authRouter = express.Router();
 authRouter.post('/verifyOTP', verifyOTPValidation , verifyOtpController.verifyOTP.bind(verifyOtpController));
-authRouter.post('/logout',allowLoggedIn , logoutController.logout.bind(logoutController));
+authRouter.post('/logout' , logoutController.logout.bind(logoutController));
 router.use('/auth' , authRouter);
 
 //who
-router.get('/whoAmI', allowLoggedIn, whoController.whoAmI.bind(whoController));
+router.get('/whoAmI', whoController.whoAmI.bind(whoController));
 
 //profile
 const profileRouter = express.Router();
-profileRouter.get('/', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), readProfileController.getProfile.bind(readProfileController));
-profileRouter.put('/update', allowLoggedIn, grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), updateProfileController.updateProfile.bind(updateProfileController));
+profileRouter.get('/', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), readProfileController.getProfile.bind(readProfileController));
+profileRouter.put('/update', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.PROFILE), updateProfileController.updateProfile.bind(updateProfileController));
 router.use('/profile' , profileRouter);
 
 //car 

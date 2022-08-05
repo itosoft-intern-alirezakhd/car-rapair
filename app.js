@@ -13,7 +13,7 @@ import userApiV1Router from "./modules/routes/api/user/api-v1.js"
 import adminApiRouter from './modules/routes/api/admin/api-v1.js'
 import shareApiRouter from './modules/routes/api/share/api-v1.js'
 //import middleware 
-import checkAuthMiddleware from "./modules/routes/middlewares/check-auth-middleware.js";
+// import checkAuthMiddleware from "./modules/routes/middlewares/share/check-auth-middleware.js";
 import allowCrossDomain from "./modules/routes/middlewares/share/set-header-middleware.js";
 import errorMiddleware from "./modules/routes/middlewares/share/error-middleware.js";
 import Car from "./modules/models/car-model.js";
@@ -36,7 +36,7 @@ app.use('/api/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
-app.use(checkAuthMiddleware);
+// app.use(checkAuthMiddleware);
 // app.get('/g' , async(req , res , next)=> {
 // 	const car = new Car({
 // 		faName : "پژوپارس",

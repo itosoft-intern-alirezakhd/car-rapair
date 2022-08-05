@@ -4,7 +4,8 @@ import registerController from '../../../controllers/api/v1/adminController/auth
 import loginController from '../../../controllers/api/v1/adminController/auth/loginController.js'
 //user
 import createUserController from "../../../controllers/api/v1/adminController/user/createController.js";
-import readUserController from "../../../controllers/api/v1/adminController/user/readController.js";
+import indexUserController from "../../../controllers/api/v1/adminController/user/indexController.js";
+import singleUserController from "../../../controllers/api/v1/adminController/user/singleController.js";
 import destroyUserController from "../../../controllers/api/v1/adminController/user/destroyController.js";
 import updateUserController from "../../../controllers/api/v1/adminController/user/updateController.js";
 //role
@@ -17,8 +18,9 @@ import  readCarController from '../../../controllers/api/v1/adminController/car/
 import  destroyCarController from '../../../controllers/api/v1/adminController/car/destroyController.js'
 import  updateCarController from '../../../controllers/api/v1/adminController/car/updateController.js'
 //middleware
-import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
-import grantAccess from '../../middlewares/grant-access-middleware.js'
+import isAdmin from '../../middlewares/admin/is-admin.js'
+// import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
+import grantAccess from '../../middlewares/share/grant-access-middleware.js'
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
 import checkExistCar from '../../middlewares/check-exist-car-middleware.js'
 
@@ -30,6 +32,7 @@ const router = express.Router();
 //validation
 import registerAdminValidation from '../../../validation/admin/register-validation.js'
 import loginAdminValidation from '../../../validation/admin/login-validation.js'
+import registerUserValidation from '../../../validation/user/register-validation.js';
 
 //auth 
 const authRouter = express.Router();
@@ -40,29 +43,29 @@ router.use('/auth' , authRouter);
 
 //User
 const userRouter = express.Router();
-userRouter.post('/create',grantAccess(TYPE_PERMISSION.CREATE, TYPE_RESOURCE.USER), createUserController.createUser.bind(createUserController));
-userRouter.post('/getAll',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER), readUserController.getUsers.bind(readUserController));
-userRouter.get('/getUser/:userId',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER), readUserController.getUser.bind(readUserController));
-userRouter.put('/update',grantAccess(TYPE_PERMISSION.UPDATE, TYPE_RESOURCE.USER), updateUserController.updateUser.bind(updateUserController));
-userRouter.delete('/delete',grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.USER), destroyUserController.deleteUser.bind(destroyUserController));
-router.use('/users' ,allowLoggedIn, checkRoleMiddleware(["superAdmin" , "admin"])  , userRouter);
+userRouter.post('/create',registerUserValidation , grantAccess(TYPE_PERMISSION.CREATE, TYPE_RESOURCE.USER), createUserController.createUser.bind(createUserController));
+userRouter.get('/getAll',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER), indexUserController.index.bind(indexUserController));
+userRouter.put('/update/:id',grantAccess(TYPE_PERMISSION.UPDATE, TYPE_RESOURCE.USER), updateUserController.updateUser.bind(updateUserController));
+userRouter.delete('/delete/:id',grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.USER), destroyUserController.deleteUser.bind(destroyUserController));
+userRouter.get('/getUser/:userId',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER), singleUserController.single.bind(singleUserController));
+router.use('/users' , isAdmin , checkRoleMiddleware(["superAdmin" , "admin"])  , userRouter);
 
 //Role
 const roleRouter = express.Router();
-roleRouter.post('/getAll', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), readRoleController.getRoles.bind(readRoleController));
+roleRouter.get('/getAll', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), readRoleController.getRoles.bind(readRoleController));
 roleRouter.get('/getRole/:roleId', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), readRoleController.getRole.bind(readRoleController));
-roleRouter.delete('/delete', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.ROLE), destroyRoleController.deleteRole.bind(destroyRoleController));
+roleRouter.delete('/delete/:roleId', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.ROLE), destroyRoleController.deleteRole.bind(destroyRoleController));
 roleRouter.get('/distinct', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), distinctRoleController.distinct.bind(distinctRoleController));
-router.use('/roles',allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
+router.use('/roles' , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
 
 //Car
 const carRouter = express.Router();
 carRouter.post('/create',createCarController.createCar.bind(createCarController))
-carRouter.post('/getAll', readCarController.getAll.bind(readCarController))
+carRouter.get('/getAll', readCarController.getAll.bind(readCarController))
 carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
 carRouter.put('/update' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
-router.use('/cars' , allowLoggedIn , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
+router.use('/cars' , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
 
 
 

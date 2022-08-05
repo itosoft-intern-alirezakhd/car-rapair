@@ -6,7 +6,7 @@ export default new (class destroyController extends InitializeController{
 
     async deleteRole (req, res, next)  {
         try {
-            const roleId = req.body.roleId;
+            const roleId = req.params.roleId;
             const role = await this.model.Role.findByIdAndDelete(roleId);
             if(!role) return this.abort(res , 404 , null , "role not found")
             const user = await User.findById(role.userRef);
