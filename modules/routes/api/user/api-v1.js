@@ -6,15 +6,15 @@ import loginOTPController from '../../../controllers/api/v1/userController/auth/
 
 //car
 import  createCarController from '../../../controllers/api/v1/userController/car/createController.js'
-import  readCarController from '../../../controllers/api/v1/userController/car/readController.js'
+import  indexCarController from '../../../controllers/api/v1/userController/car/indexController.js'
+import  singleCarController from '../../../controllers/api/v1/userController/car/singleController.js'
 import  destroyCarController from '../../../controllers/api/v1/userController/car/destroyController.js'
 import  updateCarController from '../../../controllers/api/v1/userController/car/updateController.js'
 //import middleware
 import grantAccess from '../../middlewares/share/grant-access-middleware.js'
-import checkExistCar from '../../middlewares/check-exist-car-middleware.js'
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
-
+import isLoggedIn from '../../middlewares/share/isLogged-middleware.js'
 //Router
 const router = express.Router();
 
@@ -27,11 +27,11 @@ router.use('/auth' , authRouter)
 
 //Car
 const carRouter = express.Router();
-carRouter.post('/create',checkExistCar("create"),createCarController.createCar.bind(createCarController))
-carRouter.post('/getAll', readCarController.getAll.bind(readCarController))
-carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
-carRouter.put('/update/:carId', checkExistCar("update") , updateCarController.updateCar.bind(updateCarController))
+carRouter.post('/create',createCarController.createCar.bind(createCarController))
+carRouter.post('/getAll', indexCarController.index.bind(indexCarController))
+carRouter.get('/getCar/:carId', singleCarController.single.bind(singleCarController))
+carRouter.put('/update/:carId' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete/:carId',destroyCarController.deleteCar.bind(destroyCarController))
-router.use('/cars'  , carRouter);
+router.use('/cars' , isLoggedIn(["user"])  , carRouter);
 
 export default router

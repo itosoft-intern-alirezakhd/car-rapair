@@ -1,5 +1,5 @@
 import { Controller } from "../../../../controller.js";
-import UserCar from '../../../../../models/userCar-model.js'
+import UserCar from '../../../../../models/car-model.js'
 import Car from '../../../../../models/car-model.js'
 import User from '../../../../../models/user-model.js'
 import Pagination from "../../../../../helpers/pagination.js" 

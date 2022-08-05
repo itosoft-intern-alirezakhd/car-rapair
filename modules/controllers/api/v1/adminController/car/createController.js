@@ -15,7 +15,7 @@ export default new (class CreateController extends InitializeController{
                 types,
                 brand,
                 tips,
-                slug
+                slug : new Date()
             });
             const result  = await car.save();
             if(!result) return this.abort (res, 500 ,null , "insert car error")

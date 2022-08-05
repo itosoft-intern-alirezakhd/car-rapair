@@ -30,27 +30,26 @@ const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log("Connected to Database"));
 
-
+app.post('/g' , async(req , res , next)=> {
+	console.log("JJJJ");
+	const car = new Car({
+		name: "samand",
+		logo: "ir",
+		model: "90",
+		type: "saloon",
+		brand: "iranKhodro",
+		tip: "SX"
+	  })
+	await car.save();
+	next()
+})
 app.use(allowCrossDomain);
 app.use('/api/documentation', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(express.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 // app.use(checkAuthMiddleware);
-// app.get('/g' , async(req , res , next)=> {
-// 	const car = new Car({
-// 		faName : "پژوپارس",
-// 		enName : "samand",
-// 		logo : "logo" ,
-// 		models : ["89" , "90" , "91" ],
-// 		types : ["saloon" ],
-// 		tips : [ "LX"  , "ELX"],
-// 		description : "good car",
-// 		brand : "iranKhodro"
-// 	})
-// 	await car.save();
-// 	next()
-// })
+
 app.use("/api/v1/user", userApiV1Router);
 app.use("/api/v1/admin", adminApiRouter);
 app.use("/api/v1", shareApiRouter);

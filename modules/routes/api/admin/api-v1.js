@@ -26,7 +26,6 @@ import isLoggedIn from '../../middlewares/share/isLogged-middleware.js'
 // import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/share/grant-access-middleware.js'
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
-import checkExistCar from '../../middlewares/check-exist-car-middleware.js'
 
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
