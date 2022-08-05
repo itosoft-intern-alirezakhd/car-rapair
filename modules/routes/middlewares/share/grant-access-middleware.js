@@ -1,11 +1,11 @@
 
-import Role from '../../models/role-model.js';
+import Role from '../../../models/role-model.js';
 
 
 export default   (action, resource) => {
     return async (req, res, next) => {
         try {
-            const user = res.locals.loggedInUser;
+            const user = req.user
             const role = await Role.findOne({userRef : user._id , role : user.role })
             let flag=  false;
             role.permissions.forEach(per => {
