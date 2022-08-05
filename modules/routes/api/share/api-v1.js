@@ -12,11 +12,16 @@ import updateProfileController from '../../../controllers/api/v1/shareController
 import typeCarController from '../../../controllers/api/v1/shareController/car/TypeController.js'
 import modelCarController from '../../../controllers/api/v1/shareController/car/modelController.js'
 import tipCarController from '../../../controllers/api/v1/shareController/car/tipController.js'
-
+//Token 
+import indexTokenController from '../../../controllers/api/v1/shareController/token/indexController.js'
+import singleTokenController from '../../../controllers/api/v1/shareController/token/singleController.js'
+import logoutTokenController from '../../../controllers/api/v1/shareController/token/logoutController.js'
 
 //middleware
 // import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/share/grant-access-middleware.js'
+import isLoggedIn from '../../middlewares/share/isLogged-middleware.js'
+
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
@@ -24,6 +29,7 @@ import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
 
 //validation 
 import verifyOTPValidation from '../../../validation/share/verifyOTP-validation.js'
+import isAdmin from '../../middlewares/admin/is-admin.js';
 
 const router = express.Router();
 
@@ -50,6 +56,15 @@ carRouter.get('/getType'  ,  typeCarController.getTypes.bind(typeCarController))
 carRouter.get('/getModel'  ,  modelCarController.getModels.bind(modelCarController));
 carRouter.get('/getTip'  ,  tipCarController.getTips.bind(tipCarController));
 router.use('/cars' , carRouter);
+
+
+//Token 
+const tokenRouter = express.Router();
+tokenRouter.get('/getAll'  ,   indexTokenController.index.bind(indexTokenController));
+tokenRouter.get('/getToken/:tokenId'  ,  singleTokenController.single.bind(singleTokenController));
+tokenRouter.get('/logout'  ,  logoutController.logout.bind(logoutTokenController));
+router.use('/tokens' ,isLoggedIn(["superAdmin" , "admin" , "user"])  , tokenRouter);
+
 
 
 export default router

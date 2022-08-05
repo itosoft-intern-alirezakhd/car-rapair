@@ -4,7 +4,7 @@ import aggregatePaginate from 'mongoose-aggregate-paginate-v2';
 const Schema = mongoose.Schema;
 
 const TokenSchema = new Schema({
-  userId: { type: Schema.Types.ObjectId, ref: "User" },
+  userId: { type: Schema.Types.ObjectId, ref: "user" },
   token: { type: String },
   liveTime: { type: Date },
 //   deviceName: { type: String },

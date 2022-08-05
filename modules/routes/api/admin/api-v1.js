@@ -22,6 +22,7 @@ import  destroyCarController from '../../../controllers/api/v1/adminController/c
 import  updateCarController from '../../../controllers/api/v1/adminController/car/updateController.js'
 //middleware
 import isAdmin from '../../middlewares/admin/is-admin.js'
+import isLoggedIn from '../../middlewares/share/isLogged-middleware.js'
 // import allowLoggedIn from '../../middlewares/share/allow-loggedIn-middleware.js'
 import grantAccess from '../../middlewares/share/grant-access-middleware.js'
 import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
@@ -51,7 +52,7 @@ userRouter.get('/getAll',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER),
 userRouter.put('/update/:id',grantAccess(TYPE_PERMISSION.UPDATE, TYPE_RESOURCE.USER), updateUserController.updateUser.bind(updateUserController));
 userRouter.delete('/delete/:id',grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.USER), destroyUserController.deleteUser.bind(destroyUserController));
 userRouter.get('/getUser/:userId',grantAccess(TYPE_PERMISSION.READ,  TYPE_RESOURCE.USER), singleUserController.single.bind(singleUserController));
-router.use('/users' , isAdmin , checkRoleMiddleware(["superAdmin" , "admin"])  , userRouter);
+router.use('/users' , isLoggedIn(["superAdmin" , "admin"]) , checkRoleMiddleware(["superAdmin" , "admin"])  , userRouter);
 
 //Role
 const roleRouter = express.Router();
@@ -61,7 +62,7 @@ roleRouter.get('/getRole/:roleId', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOUR
 roleRouter.delete('/delete/:roleId', grantAccess(TYPE_PERMISSION.DELETE, TYPE_RESOURCE.ROLE), destroyRoleController.deleteRole.bind(destroyRoleController));
 roleRouter.put('/update/:roleId' , grantAccess(TYPE_PERMISSION.UPDATE , TYPE_RESOURCE.ROLE), updateRoleController.updateRole.bind(updateRoleController))
 roleRouter.get('/distinct', grantAccess(TYPE_PERMISSION.READ, TYPE_RESOURCE.ROLE), distinctRoleController.distinct.bind(distinctRoleController));
-router.use('/roles' , isAdmin , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
+router.use('/roles' , isLoggedIn(["superAdmin" , "admin"]) , checkRoleMiddleware(["superAdmin" , "admin"])   , roleRouter);
 
 //Car
 const carRouter = express.Router();
@@ -70,7 +71,7 @@ carRouter.get('/getAll', readCarController.getAll.bind(readCarController))
 carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
 carRouter.put('/update' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
-router.use('/cars' , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
+router.use('/cars'  , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
 
 
 
