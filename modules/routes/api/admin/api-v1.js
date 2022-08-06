@@ -70,8 +70,8 @@ const carRouter = express.Router();
 carRouter.post('/create' , createCarValidation , createCarController.createCar.bind(createCarController))
 carRouter.get('/getAll', readCarController.getAll.bind(readCarController))
 carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
-carRouter.put('/update' , updateCarController.updateCar.bind(updateCarController))
-carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
+carRouter.put('/update/:carId' , updateCarController.updateCar.bind(updateCarController))
+carRouter.delete('/delete/:carId',destroyCarController.deleteCar.bind(destroyCarController))
 router.use('/cars' , isAdmin  , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
 
 
