@@ -16,6 +16,7 @@ export default new(class UpdateController extends InitializeController {
                 mobile
             } = req.body;
             let userId = req.params.id;
+            if (!userId) return this.abort(res, 400, null, "user id is undefined ")
             let update = {};
             if (name) update.name = name;
             if (username) update.username = username;
@@ -23,7 +24,6 @@ export default new(class UpdateController extends InitializeController {
             if (mobile) update.mobile = mobile;
             if (active) update.active = active;
             if (provider) update.provider = provider;
-            if (!userId) return this.abort(res, 400, null, "user id is undefined ")
             // const userId = req.params.userId;
             if (password) {
                 const hashedPassword = await this.helper.hashPassword(password);

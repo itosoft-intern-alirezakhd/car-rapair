@@ -29,7 +29,4 @@ export default new (class UpdateController extends InitializeController{
             return res.status(500).json(err)
         }
     }
-
-
-    
 })()

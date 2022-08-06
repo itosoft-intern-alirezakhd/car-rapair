@@ -12,6 +12,7 @@ export default new (class UpdateController extends InitializeController{
                 return this.abort(res , 400 , null , "required field should not be empty")
             }
             let carId = req.params.carId;
+            if(!carId) return this.abort(res ,400 , null , "carId is undefined")
             let userId= req.user._id;
             let user = await User.findOne({_id : userId , cars : carId});
             if(!user)   return this.abort(res , 400 , null ,"Car does not exist" )  

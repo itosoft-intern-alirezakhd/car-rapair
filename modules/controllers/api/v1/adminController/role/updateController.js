@@ -14,7 +14,7 @@ export default new(class updateController extends InitializeController {
                 permissions
             } = req.body;
             let roleId = req.params.roleId;
-            if (!roleId) return this.abort(res, 400, null, "id is undefined")
+            if (!roleId) return this.abort(res, 400, null, "roleId is undefined")
             let updateRole = {};
             if (role) updateRole.role = role;
             if (extend) updateRole.extend = extend;

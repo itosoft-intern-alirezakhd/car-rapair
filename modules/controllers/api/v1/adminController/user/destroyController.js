@@ -8,6 +8,7 @@ export default new(class DestroyController extends InitializeController {
     async deleteUser(req, res, next) {
         try {
             const userId = req.params.id;
+            if(!userId) this.abort(res , 400 , null , "id is undefined")
             if (userId === req.user._id.toString()) return this.abort(res, 401, null, 'Not Access!')
             let response = await this.model.User.findByIdAndDelete(userId)
             //removing all roles relate to user

@@ -2,9 +2,9 @@ import { InitializeController } from "./initializeController.js";
 
 
 
-export default new(class readController extends InitializeController {
+export default new(class singleController extends InitializeController {
     
-    async getProfile  (req, res, next)  {
+    async single  (req, res, next)  {
         
         try{
             if(req.user){

@@ -17,4 +17,6 @@ export default new(class WhoController extends InitializeController {
             next(error);
         }
     }
+
+    
 })()

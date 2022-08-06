@@ -7,7 +7,7 @@ export default new(class updateController extends InitializeController {
     async updateProfile  (req, res, next)  {
         try{
             if(req.user){
-                let userId = req.user._id
+                let userId = req.user._id;
                 const user = await this.model.User.findOne({_id : userId});
                 if(!user) return this.abort(res , 404 , null , "user not found!")  
                 const {username , contact  , name , email} = req.body;

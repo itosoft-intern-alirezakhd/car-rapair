@@ -23,28 +23,6 @@ export default new (class indexController extends InitializeController {
           }
         }
       ];
-
-
-
-      let lookUp = [
-        
-        // {
-        //   $addFields: {
-        //     user: { $arrayElemAt: ["$userId", 0] },
-        //   },
-        // },
-        // {
-        //   $addFields: {
-        //     user: { $ifNull: ["$user", null] },
-        //   },
-        // },
-      ];
-      // if (req.query.userId) {
-      //   req.checkQuery("userId", "ایدی کاربر وارد شده صحیح نیست").isMongoId();
-      //   if (this.showValidationErrors(req, res)) return "";
-      //   query = { ...query, userId: mongoose.Types.ObjectId(req.query.userId) };
-      // }
-      
       sort = { ...sort, _id: -1 };
       const queryData = [{ $match: query }];
       const result = await this.helper.index(req,this.model.Token , queryData, aggregateData, sort);

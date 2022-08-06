@@ -9,6 +9,7 @@ export default new(class SingleController extends InitializeController {
 
         try {
             const carId = req.params.carId;
+            if(!carId) return this.abort(res ,400 , null , "carId is undefined")
             const userId = req.user._id;
             const car = await this.model.Car.findById(carId);
             if (!car) return this.abort(res, 404, null, "car not found");

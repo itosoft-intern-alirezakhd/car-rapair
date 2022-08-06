@@ -4,7 +4,7 @@ import {response } from '../../../helpers/response.js'
 import transform from "../../../helpers/transform.js"; 
 import { Controller } from "../../../controllers/controller.js";
 const itemTransform = ["._id", ".name", ".username", ".email", ".mobile", ".role"];
-module.exports = async (req, res) => {
+export default async (req, res) => {
   let controller = new Controller();
 
   try {

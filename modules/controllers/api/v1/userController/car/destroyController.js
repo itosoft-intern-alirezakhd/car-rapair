@@ -7,6 +7,7 @@ export default new (class DestroyController extends InitializeController{
     async deleteCar (req, res)  {
         try {
             const carId = req.params.carId;
+            if(!carId) return this.abort(res ,400 , null , "carId is undefined")
             let userId = req.user._id;
             let user =await User.findOne({_id : userId , cars : carId});
             if(!user) {
