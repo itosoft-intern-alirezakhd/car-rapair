@@ -17,7 +17,8 @@ import destroyRoleController from '../../../controllers/api/v1/adminController/r
 import distinctRoleController from '../../../controllers/api/v1/adminController/role/distinctController.js'
 //car
 import  createCarController from '../../../controllers/api/v1/adminController/car/createController.js'
-import  readCarController from '../../../controllers/api/v1/adminController/car/readController.js'
+import  indexCarController from '../../../controllers/api/v1/adminController/car/indexController.js'
+import  singleCarController from '../../../controllers/api/v1/adminController/car/singleController.js'
 import  destroyCarController from '../../../controllers/api/v1/adminController/car/destroyController.js'
 import  updateCarController from '../../../controllers/api/v1/adminController/car/updateController.js'
 //middleware
@@ -68,8 +69,8 @@ router.use('/roles' , isLoggedIn(["superAdmin" , "admin"]) , checkRoleMiddleware
 //Car
 const carRouter = express.Router();
 carRouter.post('/create' , createCarValidation , createCarController.createCar.bind(createCarController))
-carRouter.get('/getAll', readCarController.getAll.bind(readCarController))
-carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
+carRouter.get('/getAll', indexCarController.index.bind(indexCarController))
+carRouter.get('/getCar/:carId', singleCarController.single.bind(singleCarController))
 carRouter.put('/update/:carId' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete/:carId',destroyCarController.deleteCar.bind(destroyCarController))
 router.use('/cars' , isAdmin  , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
