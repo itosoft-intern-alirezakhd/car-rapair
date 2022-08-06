@@ -5,7 +5,6 @@ import index from "../../../../../helpers/indexAggregate.js";
 import transform from "../../../../../helpers/transform.js";
 const itemTransform = ["._id", ".username", ".email" , ".name" , ".cars"  ];
 
-
 export class InitializeController extends Controller{
     constructor(){
         super();

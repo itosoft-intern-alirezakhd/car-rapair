@@ -45,12 +45,9 @@ export default new(class IndexController extends InitializeController {
 
             if (!result) return this.abort(res, 500, null);
             const Transform = await this.helper.transform(result, this.helper.itemTransform, true);
-            return this.helper.response(res, "get roles successfully", null, 200, Transform);
+            return this.helper.response(res, "get cars successfully", null, 200, Transform);
         } catch (err) {
             next(err)
         }
     };
-
-
-
 })()
