@@ -5,13 +5,19 @@ import {
 
 export default [
     body('name', 'name is required')
-        .notEmpty(),
+        .notEmpty()
+        .trim(),
     body('model', 'model is required')
-        .notEmpty(),
+        .notEmpty()
+        .isNumeric()
+        ,
     body('tip', 'tip is required')
-        .notEmpty(),
+        .notEmpty()
+        .trim(),
     body('brand', 'brand is required')
-        .notEmpty(),
+        .notEmpty()
+        .trim(),
     body('type', 'type is required')
-        .notEmpty(),
+        .notEmpty()
+        .trim(),
 ]

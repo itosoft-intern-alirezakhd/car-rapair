@@ -8,7 +8,7 @@ export default async (req, res , next) => {
     const token = await Token.findOne({ token: req.headers["x-access-token"] }).exec();
     if (!token) return controller.abort(res, 401 , null , "token undefined");
     const user = await User.findOne({_id : token.userId , role : {$in : ["superAdmin" , "admin"]} }).exec();
-    if (!user) return controller.abort(res, 401 , null , "user undefined");
+    if (!user) return controller.abort(res, 401 , null , "token is wrong");
     const date = new Date();
     if (token.liveTime < date) {
       await Token.findByIdAndRemove(token._id).exec();

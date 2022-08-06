@@ -1,6 +1,5 @@
 import { Controller } from "../../../../controller.js";
 import {response} from '../../../../../helpers/response.js'
-import Pagination from "../../../../../helpers/pagination.js";
 import Role from '../../../../../models/role-model.js'
 import transform from "../../../../../helpers/transform.js";
 import index from "../../../../../helpers/indexAggregate.js";
@@ -9,6 +8,6 @@ export class InitializeController extends Controller{
     constructor(){
         super();
         (this.model = {Role}) , 
-        (this.helper = {index , transform , itemTransform,response , Pagination})
+        (this.helper = {index , transform , itemTransform,response })
     }
 }

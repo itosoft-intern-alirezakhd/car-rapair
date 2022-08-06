@@ -15,6 +15,10 @@ import grantAccess from '../../middlewares/share/grant-access-middleware.js'
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
 import isLoggedIn from '../../middlewares/share/isLogged-middleware.js'
+
+//validation 
+import createCarValidation from '../../../validation/share/car-validation.js'
+
 //Router
 const router = express.Router();
 
@@ -27,7 +31,7 @@ router.use('/auth' , authRouter)
 
 //Car
 const carRouter = express.Router();
-carRouter.post('/create',createCarController.createCar.bind(createCarController))
+carRouter.post('/create' , createCarValidation , createCarController.createCar.bind(createCarController))
 carRouter.post('/getAll', indexCarController.index.bind(indexCarController))
 carRouter.get('/getCar/:carId', singleCarController.single.bind(singleCarController))
 carRouter.put('/update/:carId' , updateCarController.updateCar.bind(updateCarController))

@@ -37,6 +37,8 @@ import registerAdminValidation from '../../../validation/admin/register-validati
 import loginAdminValidation from '../../../validation/admin/login-validation.js'
 import registerUserValidation from '../../../validation/user/register-validation.js';
 import roleAdminValidation from '../../../validation/admin/role-validation.js'
+import createCarValidation from '../../../validation/share/car-validation.js'
+
 //auth 
 const authRouter = express.Router();
 authRouter.post('/signup',registerAdminValidation , registerController.signUp.bind(registerController) );
@@ -65,12 +67,12 @@ router.use('/roles' , isLoggedIn(["superAdmin" , "admin"]) , checkRoleMiddleware
 
 //Car
 const carRouter = express.Router();
-carRouter.post('/create',createCarController.createCar.bind(createCarController))
+carRouter.post('/create' , createCarValidation , createCarController.createCar.bind(createCarController))
 carRouter.get('/getAll', readCarController.getAll.bind(readCarController))
 carRouter.get('/getCar/:carId', readCarController.getCar.bind(readCarController))
 carRouter.put('/update' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete',destroyCarController.deleteCar.bind(destroyCarController))
-router.use('/cars'  , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
+router.use('/cars' , isAdmin  , checkRoleMiddleware(["superAdmin" , "admin"]) , carRouter);
 
 
 
