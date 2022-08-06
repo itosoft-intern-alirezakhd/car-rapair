@@ -32,7 +32,7 @@ router.use('/auth' , authRouter)
 //Car
 const carRouter = express.Router();
 carRouter.post('/create' , createCarValidation , createCarController.createCar.bind(createCarController))
-carRouter.post('/getAll', indexCarController.index.bind(indexCarController))
+carRouter.get('/getAll', indexCarController.index.bind(indexCarController))
 carRouter.get('/getCar/:carId', singleCarController.single.bind(singleCarController))
 carRouter.put('/update/:carId' , updateCarController.updateCar.bind(updateCarController))
 carRouter.delete('/delete/:carId',destroyCarController.deleteCar.bind(destroyCarController))

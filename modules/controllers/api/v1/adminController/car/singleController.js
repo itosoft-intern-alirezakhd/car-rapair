@@ -5,23 +5,14 @@ import {
 
 export default new(class SingleController extends InitializeController {
 
-    async single(req, res) {
-
+    async single(req, res  ,next)  {
         try {
             const carId = req.params.carId;
-            const userId = req.user._id;
-            const car = await this.model.Car.findById(carId);
-            if (!car) return this.abort(res, 404, null, "car not found");
-            this.helper.response(res, "finding car successfully", null, 200, {
-                userId,
-                car
-            })
+            const car = await this.model.Car.findOne({_id : carId})
+            if(!car) return this.abort(res , 404 , null , "car not found");
+            this.helper.response(res ,"finding car successfully" , null , 200 , {adminId : req.user._id , car})
         } catch (err) {
-            this.abort(res, 500, null, err);
+            this.abort(res , 500 , null , err);
         }
-
     }
-
-
-
 })()
