@@ -1,5 +1,5 @@
-import User from "../../models/user-model.js";
-import Role from "../../models/role-model.js";
+import User from "../../../models/user-model.js";
+import Role from "../../../models/role-model.js";
 import mongoose from "mongoose";
 
 export default  (roles) => {

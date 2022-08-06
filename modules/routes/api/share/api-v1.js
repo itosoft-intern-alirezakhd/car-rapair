@@ -21,7 +21,7 @@ import who from '../../middlewares/share/who-middleware.js'
 //const 
 import { TYPE_PERMISSION } from "../../../helpers/const.js";
 import { TYPE_RESOURCE } from "../../../helpers/const.js";
-import checkRoleMiddleware from '../../middlewares/check-role-middleware.js';
+import checkRoleMiddleware from '../../middlewares/share/check-role-middleware.js';
 //validation 
 import verifyOTPValidation from '../../../validation/share/verifyOTP-validation.js'
 
